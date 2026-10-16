@@ -1,0 +1,240 @@
+Type2 JDBC Driver Architecture / Native API Driver 
+=====================================================
+Type2 JDBC driver is not designed to interact with database software directly.
+
+It is designed to take the support of Vendor DB library to locate and interact with database software.
+
+Diagram: jdbc5.1
+
+Advantages:
+
+> It does not take the support of ODBC Driver.
+
+> It gives better performance compare to Type1 JDBC driver.
+
+Disadvantages:
+
+> This driver performance is bit slow. It is not suitable for medium and large scale 
+  projects. Hence it is not a industry standard driver.
+
+> To work with Type2 JDBC driver we need to arrange Vendor DB library.
+
+> Since Vendor db library present at client side so it is not suitable for untrusted 
+  applets to database communication.
+
+> For every database software we need to arrange Type2 JDBC driver seperately.
+
+
+
+Type4 JDBC Driver Architecture / Native Protocol Driver / Thin Driver
+=====================================================================
+Type4 JDBC driver is not designed to take the support of ODBC driver and Vendor DB library.
+
+It is designed to interact with database software directly.
+
+Diagram: jdbc5.2
+
+Advantages:
+
+> This driver gives better performance when compare to Type1 and Type2 JDBC driver.
+
+> Type4 jdbc driver completely developed by using java so it gives platform independency.
+
+> It does not take the support of ODBC driver and Vendor DB library.
+
+> Since ODBC driver and Vendor DB library not present at client side so it is suitable to 
+  perform untrusted applets to database communication.
+
+> It is suitable for medium and large scale projects. Hence it is a industry standard driver.
+
+Disadvantages:
+
+> It is not a built-in driver of JDK.
+
+> For every database software we need to arrange Type4 JDBC driver seperately.
+
+
+JDBC Connection Pool 
+====================
+It is a factory containing set of readily available JDBC connection objects before actual 
+being used.
+
+Diagram: jdbc5.3
+
+JDBC Connection pool represent connectivity with same database software.
+
+Advantages:
+
+> It gives reusable JDBC Connection objects.
+
+> With minimum Connection objects we can interact with multiple clients.
+
+> A programmer is not resposible to create, manage and destroy JDBC Connection objects.
+  A JDBC Connection pool is responsible.
+
+
+Type3 JDBC Driver Architecture / Net Protocol Driver 
+=====================================================
+Web server or proxy server or IDE's server contains JDBC Connection pool.
+
+Type3 JDBC driver is designed to interact with web server or proxy server or IDE's server to get one JDBC Connection object from JDBC Connection pool.
+
+Diagram: jdbc5.4
+
+With the respect to the diagram: 
+
+1) Webserver or proxy server interacts with database software to get reusable 
+   JDBC Connection objects in JDBC Connection pool.
+
+2) Our application interacts with web server or proxy server to get one reusable 
+   JDBC Connection object.
+
+3) Our application uses JDBC Connection object to create other JDBC connection objects.
+
+4) Once if we call con.close(),JDBC Connection object goes back to JDBC connection pool.
+
+
+SQL Injection Problem 
+=====================
+Along with input values if we pass special SQL instructions which change the behaviour of a query and behaviour of an application is called SQL injection problem.
+
+Here special SQL instructions means comment in SQL i.e --.
+
+While dealing with simple Statement object there is a chance of raising SQL injection problem.
+ex:
+	Enter username : raja'-- 
+	Enter password : pooja 
+	
+	Valid Credentials 
+
+
+userlist table 
+--------------
+drop table userlist;
+create table userlist(uname varchar2(10),pwd varchar2(10));
+insert into userlist values('raja','rani');
+insert into userlist values('king','kingdom');
+commit;
+
+ex:
+---
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class SqlInjProbApp 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the username : ");
+		String name = sc.next();
+		
+		System.out.println("Enter the password : ");
+		String pass = sc.next();
+		
+		//convert string inputs to according to sql query.
+		name = "'"+name+"'";
+		pass = "'"+pass+"'";
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st = con.createStatement();
+		
+		String qry = "select count(*) from userlist where uname="+name+" and pwd="+pass;
+		
+		ResultSet rs = st.executeQuery(qry);
+		int result = 0;
+		while(rs.next())
+		{
+			result = rs.getInt(1);
+		}
+		if(result==0)
+			System.out.println("Invalid Credentials");
+		else
+			System.out.println("Valid Credentials");
+		
+		rs.close();
+		st.close();
+		con.close();
+	}
+}
+
+Types of Statement objects in JDBC
+=================================
+We have three JDBC Statement objects.
+
+1) Simple Statement object
+------------------------
+It is an object of underlying supplied java class which implements java.sql.Statement interface.
+
+2) PreparedStatement object 
+--------------------------
+It is an object of underlying supplied java class which implements java.sql.PreparedStatement interface.
+
+3) CallableStatement object 
+-----------------------------
+It is an object of underlying supplied java class which implements java.sql.CallableStatement interface.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

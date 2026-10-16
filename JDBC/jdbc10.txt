@@ -1,0 +1,308 @@
+Ex:1
+----
+
+Procedure 
+----------
+create or replace procedure first_proc(A IN number,B IN number,C OUT number)
+is
+begin 
+C:=A+B;
+end;
+/
+
+CallableStmtApp1.java
+---------------------
+package com.rt.www;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Types;
+
+public class CallableStmtApp1 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		CallableStatement cst = con.prepareCall("{CALL first_proc(?,?,?)}");
+		
+		//register OUT parameter 
+		cst.registerOutParameter(3, Types.INTEGER);
+		
+		//set IN parameter
+		cst.setInt(1, 20);
+		cst.setInt(2, 30);
+		
+		//execute the procedure
+		cst.execute();
+		
+		//gather the result 
+		int result = cst.getInt(3);
+		System.out.println("Sum of two numbers is = "+result);
+		cst.close();
+		con.close();
+	}
+}
+
+Ex:2
+----
+
+Function 
+--------
+create or replace function first_fun(A number,B number)
+return number
+is
+C number;
+begin 
+C:=A+B;
+return C;
+end;
+/
+
+CallableStmtApp2.java
+---------------------
+package com.rt.www;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Types;
+
+public class CallableStmtApp2 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		CallableStatement cst = con.prepareCall("{? = call first_fun(?,?)}");
+		
+		// register out parameter
+		cst.registerOutParameter(1, Types.INTEGER);
+		
+		//set IN parameter
+		cst.setInt(2,40);
+		cst.setInt(3, 60);
+		
+		//execute 
+		cst.execute();
+		
+		//gather the result 
+		int result = cst.getInt(1);
+		
+		System.out.println("Addition of two numbers is = "+result);
+		
+		cst.close();
+		con.close();
+	}
+}
+
+Batch Processing 
+================
+It is technique to declare multiple queries in a batch and makes single call to the database.
+
+To add the queries to a batch we need to use addBatch() method.
+ex:
+	st.addBatch(query);
+
+To execute the batch we need to use executeBatch() method.
+ex:
+	int[] result = st.executeBatch();
+
+ex:
+---
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class BatchProcessing 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st = con.createStatement();
+		
+		String qry1 = "insert into student values(104,'ramulu','pune')";
+		String qry2 = "update student set sname='rani' where sno=101";
+		String qry3 = "delete from student where sno=103";
+		
+		//add the queries to batch 
+		st.addBatch(qry1);
+		st.addBatch(qry2);
+		st.addBatch(qry3);
+		
+		//execute the batch 
+		int[] result = st.executeBatch();
+		int sum = 0;
+		for(int i : result)
+		{
+			sum += i;
+		}
+		System.out.println("No of records effected is = "+sum);
+		st.close();
+		con.close();
+	}
+}
+
+Transaction Management 
+======================
+Transaction means single unit of work.
+
+In transaction management, we commit if transaction success otherwise we rollback.
+
+Diagram: jdbc10.1
+ 
+kotak table 
+----------
+drop table kotak;
+create table kotak(accno number(6),accholder varchar2(10),accbal number(8));
+insert into kotak values(111111,'bhaskar',5000);
+insert into kotak values(222222,'praveen',6000);
+commit;
+
+sbi table 
+----------
+drop table sbi;
+create table sbi(accno number(6),accholder varchar2(10),accbal number(8));
+insert into sbi values(100001,'faiz',80000);
+insert into sbi values(200002,'bharat',90000);
+commit;
+
+ex
+---
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class TXNManagementApp 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter source account no : ");
+		int sno = sc.nextInt();
+		
+		System.out.println("Enter destination account no : ");
+		int dno = sc.nextInt();
+		
+		System.out.println("Enter amount to transfer : ");
+		int amt = sc.nextInt();
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st = con.createStatement();
+		
+		//set auto complete false
+		con.setAutoCommit(false);
+		
+		String qry1 = "update sbi set accbal = accbal -"+amt+" where accno = "+sno;
+		String qry2 = "update kotak set accbal = accbal + "+amt+" where accno ="+dno;
+		
+		//add the queries to batch
+		st.addBatch(qry1);
+		st.addBatch(qry2);
+		
+		//execute the batch
+		int[] result = st.executeBatch();
+		
+		boolean flag = true;
+		for(int i : result)
+		{
+			if(i==0)
+			{
+				flag = false;
+				break;
+			}
+		}
+		if(flag == true)
+		{
+			System.out.println("Transaction done Successfully");
+			con.commit();
+		}
+		else
+		{
+			System.out.println("Transaction Failed");
+			con.rollback();
+		}
+		st.close();
+		con.close();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

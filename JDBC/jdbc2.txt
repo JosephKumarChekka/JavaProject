@@ -1,0 +1,209 @@
+Types of drivers in JDBC 
+========================
+There are four JDBC drivers.
+
+1) Type1 JDBC Driver / JDBC-ODBC Bridge Driver
+
+2) Type2 JDBC Driver / Native API Driver 
+
+3) Type3 JDBC Driver / Net Protocol Driver
+
+4) Type4 JDBC Driver / Native Protocol Driver 
+
+To use any JDBC driver, we need to register JDBC driver with DriverManager service.
+
+Every JDBC application contains one built-in service called DriverManager service. 
+
+
+Class.forName()
+===============
+It is recommanded to register JDBC driver with DriverManager service.
+
+It is used to load driver class but it won't create an object.
+
+ex:
+	Class.forName("driver-class-name");
+
+
+Connection object
+=================
+Connection is an interface which is present in java.sql package.
+
+It is an object of underlying supplied java class which implements java.sql.Connection interface.
+
+To perform any operation in database we need to establish the connection. 
+
+Once the work with database has completed we need to disconnect the database.
+
+ex:
+	Connection con;
+
+
+DriverManager.getConnection()
+=============================
+DriverManager is a class which is present in java.sql package.
+
+A getConnection() static method is used to interact with database and gets one JDBC connection object represent connectivity between java application and database software.
+
+ex:
+	Connection con = DriverManager.getConnection("url","username","password");
+
+
+Statement object 
+================
+Statement is an interface which is present in java.sql package.
+
+It is an object of underlying supplied java class which implements java.sql.Statement interface.
+
+It acts like a vehicle between java application and database software.
+
+It is used to sends and executes SQL query in database software.
+
+We can create Statement object as follow.
+ex:
+	Statement st = con.createStatement();
+
+
+ResultSet object
+================
+ResultSet is an interface which is present in java.sql package.
+
+It is an object of underlying supplied java class which implements java.sql.ResultSet interface.
+
+Every ResultSet contains two positions.
+
+1) BFR (Before First Record/Row)
+
+2) ALR (After Last Record/Row)
+
+By default record pointer points to BFR position.
+
+Every record ResultSet having 1 as base index and every column of record ResultSet having 1 as base index.
+
+
+rs.next()
+---------
+It is used to move the record pointer to next position from current position. If next position is a record then returns true. If next position is ALR then returns false.
+
+To read the values from record ResultSet we need to use getXxx(-) methods with index numbers or column name.
+
+Here getXxx() methods are getInt(), getString(), getFloat(), getDouble() and etc.
+
+Diagram: jdbc2.1
+
+
+Types of queries 
+=================
+According to JDBC point of view we have two types of queries.
+
+1) Select Queries 
+
+2) Non-Select Queries 
+
+1) Select Queries 
+------------------
+Select queries give bunch of records from database software.
+
+ex:
+	select * from student;
+
+JDBC Statement gave executeQuery() method to execute select queries.
+ex:
+	ResultSet rs = st.executeQuery("select * from student");
+
+
+2) Non-Select Queries 
+------------------
+Non-Select queries give numeric value representing number of records effected in a database table.
+ex:
+	delete from student;
+
+JDBC Statement gave executeUpdate() method to execute non-select queries.
+ex:
+	int result = st.executeUpdate("delete from student");
+
+
+Oracle 
+======
+Version		:	10g or 11g or 12c 
+
+Vendor		:	Oracle Corporation 
+
+Website		:	www.oracle.com/in/database
+
+Port No		:	1521
+
+UserName	:	system (default)
+
+Password	:	admin 
+
+Download link	:	
+
+https://drive.google.com/file/d/0B9rC21sL6v0td1NDZXpkUy1oMm8/view?usp=drive_link&resourcekey=0-aKooR3NmAh_eLo_qGw_inA
+
+
+Eclipse
+============
+IDE		:	JEE 
+
+Flavours	:	Luna, Mars, Indigo, Kepler and etc.
+
+Vendor		:	Eclipse Foundation
+
+Website		:	www.eclipse.org
+
+Download link	:
+
+https://drive.google.com/file/d/1c8TAX048EjAubIFByqZ0DzWZI3oKuauR/view?usp=drive_link
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,457 @@
+Limitations with simple Statement object
+========================================
+1) It is not suitable to execute same query for multiple times with same or different values.
+
+2) There is a chance of raise SQL injection problem.
+
+3) Framing query with variables is quit complex.
+
+4) Without conversion we can't use string values directly in our query.
+
+5) It does not allow us to insert date values to database table column.
+
+6) It does not allow us to insert LOB(Large Object) values to database table column.
+
+To overcome above limitations we need to use simple PreparedStatement object.
+	
+	
+PreparedStatement 
+==================
+PreparedStatement is an interface which is present in java.sql package.
+
+PreparedStatement object deals with pre-compiled SQL query.
+
+A query which goes to database software without input values and becomes parsed query either it is executed or not is called pre-compiled SQL query.
+
+We can create PreparedStatement object as follow.
+ex:
+	PreparedStatement ps = con.prepareStatement("QUERY");
+
+Q) Write a JDBC application to insert student record into student table?
+
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+
+public class PSInsertApp 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the student no : ");
+		int no = sc.nextInt();
+		
+		System.out.println("Enter the student name : ");
+		String name = sc.next();
+		
+		System.out.println("Enter the student address : ");
+		String add = sc.next();
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		
+		String qry = "insert into student values(?,?,?)";
+		
+		PreparedStatement ps = con.prepareStatement(qry);
+		
+		//set the values 
+		ps.setInt(1, no);
+		ps.setString(2, name);
+		ps.setString(3, add);
+		
+		//execute 
+		int result = ps.executeUpdate();
+		if(result==0)
+			System.out.println("No Record Inserted");
+		else
+			System.out.println(result+" Record Inserted");
+		
+		ps.close();
+		con.close();
+		
+	}
+}
+
+Q) Write a jdbc application to update student name based on student number?
+
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+
+public class PSUpdateApp 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the student no : ");
+		int no = sc.nextInt();
+		
+		System.out.println("Enter the student name : ");
+		String name = sc.next();
+
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		
+		String qry = "update student set sname=? where sno=?";
+		
+		PreparedStatement ps = con.prepareStatement(qry);
+		
+		//set the values to query parameters 
+		ps.setString(1,name);
+		ps.setInt(2,no);
+		
+		//execute 
+		int result = ps.executeUpdate();
+		if(result==0)
+			System.out.println("No Record Updated");
+		else
+			System.out.println(result+" Record Updated");
+		
+		ps.close();
+		con.close();
+		
+	}
+}
+
+Q) Write a jdbc application to delete student record based on student number?
+
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+
+public class PSDeleteApp 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the student no : ");
+		int no = sc.nextInt();
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		
+		String qry = "delete from student where sno = ?";
+		
+		PreparedStatement ps = con.prepareStatement(qry);
+		
+		//set the values 
+		ps.setInt(1, no);
+		
+		//execute 
+		int result = ps.executeUpdate();
+		if(result==0)
+			System.out.println("No Record Deleted");
+		else
+			System.out.println(result+" Record Deleted");
+		
+		ps.close();
+		con.close();
+	}
+}
+
+
+Solution for SQL Injection Problem 
+==================================
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+public class SolForSqlInjProbApp 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the username : ");
+		String name = sc.next();
+		
+		System.out.println("Enter the password : ");
+		String pass = sc.next();
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		
+		String qry = "select count(*) from userlist where uname=? and pwd=?";
+		
+		PreparedStatement ps = con.prepareStatement(qry);
+	
+		//set the values 
+		ps.setString(1, name);
+		ps.setString(2, pass);
+		
+		ResultSet rs = ps.executeQuery();
+		int result = 0;
+		while(rs.next())
+		{
+			result = rs.getInt(1);
+		}
+		if(result==0)
+			System.out.println("Invalid Credentials");
+		else
+			System.out.println("Valid Credentials");
+		
+		rs.close();
+		ps.close();
+		con.close();
+	}
+}
+
+DatabaseMetaData 
+================
+DatabaseMetaData is an interface which is present in java.sql package.
+
+DatabaseMetaData provides metadata of a database.
+
+DatabaseMetaData gives information about Database product name, database production version, database driver name, database driver version, database username and etc.
+
+We can create DatabaseMetaData object as follow.
+
+ex:
+	DatabaseMetaData dbmd = con.getMetaData();
+
+ex:
+---
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+
+public class DBMDApp 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		DatabaseMetaData dbmd = con.getMetaData();
+		
+		System.out.println(dbmd.getDatabaseProductName());
+		System.out.println(dbmd.getDatabaseProductVersion());
+		System.out.println(dbmd.getDriverName());
+		System.out.println(dbmd.getDriverVersion());
+		System.out.println(dbmd.getUserName());
+		
+		con.close();
+	}
+}
+
+ResultSetMetaData 
+=================
+ResultSetMetaData is an interface which is present in java.sql package.
+
+ResultSetMetaData provides metadata of a table.
+
+ResultSetMetaData gives information about number of columns, name of the columns, type of columns, size of columns and etc.
+
+We can create ResultSetMetaData object as follow.
+ex:
+	ResultSetMetaData rsmd = rs.getMetaData();
+
+ex:
+---
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+
+public class RSMDApp 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		String qry = "select * from student";
+		PreparedStatement ps = con.prepareStatement(qry);
+		ResultSet rs = ps.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		System.out.println(rsmd.getColumnCount());
+		System.out.println(rsmd.getColumnName(1));
+		System.out.println(rsmd.getColumnTypeName(2));
+		System.out.println(rsmd.getColumnDisplaySize(2));
+		
+		rs.close();
+		ps.close();
+		con.close();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

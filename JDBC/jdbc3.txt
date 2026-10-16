@@ -1,0 +1,304 @@
+Type4 JDBC Driver / Native Protocol Driver 
+==========================================
+
+Driver Name	:	oracle.jdbc.driver.OracleDriver
+
+Driver URL	:	jdbc:oracle:thin:@localhost:1521:XE
+
+USERNAME	:	system 
+
+PASSWORD	:	admin 	
+
+
+Steps to develop JDBC application 
+==================================
+There are six steps to develop JDBC application.
+
+1) Register JDBC driver with DriverManager service.
+
+2) Establish the connection with database software.
+
+3) Create Statement object.
+
+4) Sends and Executes SQL query in database software.
+
+5) Gather the result from database to process the result.
+
+6) Close all JDBC connection objects.
+
+Steps to develop first JDBC application using eclipse IDE
+=========================================================
+step1:
+------
+	Create a student table with records.
+	ex:
+	drop table student;
+	create table student(sno number(3),sname varchar2(10),sadd varchar2(12));
+	insert into student values(101,'raja','hyd');
+	insert into student values(102,'ravi','delhi');
+	insert into student values(103,'ramana','vizag');
+	commit;
+
+step2:
+-----
+	Launch eclipse ide by choosing workspace location.
+
+step3:
+------
+	Create a java project inside eclipse IDE.
+	ex:
+		File --> Project --> Java Project --> Next -->
+		Project Name : RT-JAVA-BATCH --> Next --> Finish --> Don't create -> No
+step4:
+-----
+	Add "ojdbc14.jar" file in project build path.
+	(C:\oraclexe\app\oracle\product\10.2.0\server\jdbc\lib)
+	ex:
+		Right click to RT-JAVA-BATCH --> build path --> configure Build path
+		--> Libararies --> classpath --> Add External Jars --> 
+		select ojdbc14.jar file --> Apply and close.
+
+step5:
+------
+	Create a "com.rt.www" package inside "src" folder.
+
+step6:
+------
+	Create a "SelectApp.java" file inside "com.rt.www" package.
+
+SelectApp.java
+-------------
+package com.rt.www;
+
+// CTRL + SHIFT + o
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class SelectApp 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st = con.createStatement();
+		
+		String qry = "select * from student";
+		
+		ResultSet rs = st.executeQuery(qry);
+		while(rs.next())
+		{
+		System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3));
+		}
+		rs.close();
+		st.close();
+		con.close();
+	}
+}
+
+step7:
+-----
+	Run JDBC application.
+
+
+
+Q) Write a JDBC application to display student name and student address?
+
+package com.rt.www;
+
+// CTRL + SHIFT + o
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class SelectApp 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st = con.createStatement();
+		
+		String qry = "select sname,sadd from student";
+		
+		ResultSet rs = st.executeQuery(qry);
+		while(rs.next())
+		{
+			System.out.println(rs.getString(1)+" "+rs.getString(2));
+		}
+		rs.close();
+		st.close();
+		con.close();
+	}
+}
+
+
+Q) Write a JDBC application to display student information based on student number?
+
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class SelectApp2 
+{
+	public static void main(String[] args)throws Exception 
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the student no : ");
+		int no = sc.nextInt();
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st = con.createStatement();
+		
+		String qry = "select * from student where sno="+no;
+		
+		ResultSet rs = st.executeQuery(qry);
+		int cnt = 0;
+		while(rs.next())
+		{
+		System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3));
+			cnt = 1;
+		}
+		if(cnt==0)
+			System.out.println("No Rows Selected");
+		
+		rs.close();
+		st.close();
+		con.close();
+	}
+}
+
+Non-Select Queries
+==================
+
+Q) Write a jdbc application to insert a record into student table?
+
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class InsertApp 
+{
+	public static void main(String[] args)throws Exception  
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the student no : ");
+		int no = sc.nextInt();
+		
+		System.out.println("Enter the student name : ");
+		String name = sc.next();
+		
+		System.out.println("Enter the student address : ");
+		String add = sc.next();
+		
+		//convert string inputs according to SQL query.
+		name = "'"+name+"'";
+		add = "'"+add+"'";
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","admin");
+		Statement st  = con.createStatement();
+		
+		String qry = "insert into student values("+no+","+name+","+add+")";
+		
+		int result = st.executeUpdate(qry);
+		
+		if(result==0)
+			System.out.println("No Record Inserted");
+		else
+			System.out.println(result+" Record Inserted");
+		
+		st.close();
+		con.close();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

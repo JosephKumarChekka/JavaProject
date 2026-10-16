@@ -1,0 +1,263 @@
+JDBC Flexible Application 
+=========================
+In JDBC, Connection object consider as heavy weight object.
+
+It is never recommanded to create Connection object for every JDBC application.
+
+We can create utility class which create and return JDBC Connection object.
+
+If any JDBC application requires Connection object they can take from utility class.
+
+A utility class is a design pattern in object-oriented programming where a class is used exclusively as a container for reusable, stateless helper methods and constants.
+
+ex:
+	ConnectionUtility
+		|
+		|
+	  FlexibleApp
+		|
+		|
+	Database Software 
+
+ConnectionUtility.java
+------------------------
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class ConnectionUtility 
+{
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+	private static final String USERNAME = "system";
+	private static final String PASSWORD = "admin";
+	
+	public static Connection getInstance()throws Exception
+	{
+		return DriverManager.getConnection(URL,USERNAME,PASSWORD);
+	}
+}
+
+FlexibleApp.java
+--------------
+package com.rt.www;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class FlexibleApp 
+{
+	public static void main(String[] args)throws Exception
+	{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = ConnectionUtility.getInstance();
+		Statement st  = con.createStatement();
+		String qry = "select * from student";
+		ResultSet rs = st.executeQuery(qry);
+		while(rs.next())
+		{
+			System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3));
+		}
+		rs.close();
+		st.close();
+		con.close();
+	}
+}
+
+Interview Question 
+==================
+
+Q) In how many ways we can create singleton class?
+
+There are six ways to create singleton class in java.
+
+1) Eager Initialization 
+2) Lazy Initialization 
+3) Synchronized Method 
+4) Double-checked Locking 
+5) Bill Pugh Singleton /static inner class
+6) Enum Singleton 
+
+1) Eager Initialization
+-----------------------
+Object is created when class is loaded.
+
+ex:
+---
+package com.rt.www;
+
+public class Singleton 
+{
+	private static Singleton single = new Singleton();
+	
+	private Singleton() 
+	{
+		
+	}
+	public static Singleton getInstance()
+	{
+		return single;
+	}
+}
+
+2) Lazy Initialization
+----------------------
+Object is created when getIntance() method is called.
+
+ex:
+---
+package com.rt.www;
+
+public class Singleton 
+{
+	private static Singleton single =null;
+	
+	private Singleton() 
+	{
+		
+	}
+	public static Singleton getInstance()
+	{
+		if(single == null)
+		{
+			single = new Singleton();
+		}
+		return single;
+	}
+}
+
+3) Synchronized Method 
+----------------------
+It makes lazy initialization as thread safe.
+
+ex:
+--
+package com.rt.www;
+
+public class Singleton 
+{
+	private static Singleton single =null;
+	
+	private Singleton() 
+	{
+		
+	}
+	public synchronized static Singleton getInstance()
+	{
+		if(single == null)
+		{
+			single = new Singleton();
+		}
+		return single;
+	}
+}
+
+4) Double-checked Locking
+-------------------------
+package com.rt.www;
+
+public class Singleton 
+{
+	private static volatile Singleton single =null;
+	
+	private Singleton() 
+	{
+		
+	}
+	public static Singleton getInstance()
+	{
+		if(single == null)
+		{
+			synchronized(Singleton.class)
+			{
+				if(single == null)
+				{
+					single = new Singleton();
+				}
+			}
+		}
+		return single;
+	}
+}
+
+5) Bill Pugh Singleton 
+-------------------------
+It uses static inner class for lazy and thread safe initialization.
+
+ex:
+---
+package com.rt.www;
+
+public class Singleton 
+{
+	private static  Singleton single =null;
+	
+	private static class Holder
+	{
+		public static final Singleton INSTANCE = new Singleton();
+	}
+	
+	public static Singleton getInstance()
+	{
+		return Holder.INSTANCE;
+	}
+}
+
+6) Enum singleton 
+-----------------
+It is a java's simplest and most robust singleton class.
+
+ex:
+	enum Singleton
+	{
+		INSTANCE;
+
+		public void show()
+		{
+			System.out.println("Object created");
+		}
+	}  
+
+	Singleton s = Singleton.INSTANCE;
+	s.show()
+
+
+
+Thin-Client/Fat-Server Application 
+===================================
+Every JDBC application is a thin-client/fat-server application.
+
+Diagram: jdbc9.1
+
+To make any JDBC application as thin-client /fat-server application. We need to declare business logic and persistence logic inside database software in the form of stored PL/SQL procedures and functions.
+
+To deal with stored PL/SQL procedures and functions we need to use CallableStatement object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
