@@ -1,0 +1,87 @@
+Functional interface 
+====================
+Function interface introduced in Java 8.
+
+Interface which contains only one abstract method is called functional interface.
+
+It can have any number of default methods, static methods and private methods.
+
+We have following list of function interfaces in java.
+ex:
+	Comparable - compareTo() method 
+	Runnable   - run() method 
+	Comparator - compare() method 
+	ActionListener - actionPerformed() method 
+	and etc.
+
+It is also known as SAM or Single Abstract Method interface.
+
+The main objective of functional interface is to achieve functional programming.
+ex:
+	a = f1(){
+
+	}
+
+	f1(f2(){})
+	{
+	}
+
+@FunctionalInterface annotation is uesd to declare function interface which is optional.
+
+ex:
+	@FunctionalInterface 
+	interface <interface_name>
+	{
+		- // 1 abstract method 
+		- // default methods 
+		- // static methods
+		- // private methods 
+	}
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract void deposit();
+}
+class ATMImpl implements ATM
+{
+	public void deposit()
+	{
+		System.out.println("Deposit Method");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		ATM atm = new ATMImpl();
+		atm.deposit();
+	}
+}
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract void deposit();
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		// anonymous inner class
+		ATM atm = new ATM()
+		{
+			public void deposit()
+			{
+				System.out.println("My Deposit Method");
+			}
+		};
+		atm.deposit();
+	}
+}

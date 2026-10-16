@@ -1,0 +1,419 @@
+Abstract class
+===============
+It is a collection of zero or more abstract methods or concrete(regular) methods.
+
+A abstract keyword is applicable for methods and classes but not for variables.
+
+It is not possible to create object for abstract class because it represents incomplete methods.
+
+To write the implementation of abstract class we will use sub class.
+
+Abstract class contains only instance variables.
+
+By default every abstract method is a public and abstract.
+
+ex:
+	public abstract void methodOne();
+
+If we known partial implementation then we need to use abstract class.
+
+ex:
+---
+abstract class Vehicle
+{
+	public abstract void sound();
+}
+class Car extends Vehicle
+{
+	@Override
+	public void sound()
+	{
+		System.out.println("Boor Boor");		
+	}
+}
+class Test  
+{
+	public static void main(String[] args) 
+	{
+			Vehicle v  = new Car();
+			v.sound();
+	}
+}
+
+ex:
+---
+abstract class Plan 
+{
+	//instance variable
+	protected double rate;
+	
+	//abstract method 
+	public abstract void getRate();
+	
+	//concrete method 
+	public void calculateBillAmt(int units)
+	{
+		System.out.println("Total Units : "+units);
+		System.out.println("Total Bill : "+ rate*units);
+	}
+}
+class DomesticPlan extends Plan 
+{
+	@Override
+	public void getRate()
+	{
+		rate = 2.5d;
+	}
+}
+class CommercialPlan extends Plan 
+{
+	@Override
+	public void getRate()
+	{
+		rate = 5.0d;
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		DomesticPlan dp = new DomesticPlan();
+		dp.getRate();
+		dp.calculateBillAmt(250);
+			
+		CommercialPlan cp = new CommercialPlan();
+		cp.getRate();
+		cp.calculateBillAmt(250);
+	}
+}
+
+Abstraction Example 
+===================
+
+Example1
+---------
+abstract class Draw
+{
+	public abstract void shape();
+}
+class Circle extends Draw
+{
+	@Override
+	public void shape()
+	{
+		System.out.println("Circle Shape");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Draw d = new Circle();
+		d.shape();
+	}
+}
+
+Example2
+-------
+interface Payment 
+{
+	public abstract void paymentMethod();	
+}
+class PaymentImpl implements Payment
+{
+	@Override
+	public void paymentMethod()
+	{
+		System.out.println("Card Payment");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Payment p = new PaymentImpl();
+		p.paymentMethod();
+	}
+}
+
+Packages
+========
+A package is a collection of classes, interfaces, enums and annotations.
+
+Here enum is a special class and annotation is a special interface.
+
+In general, a package is a collection of classes and interfaces.
+
+A package is also known as folder or a directory.
+
+We have two types of packages in java.
+
+1) Predefined packages
+
+2) Userdefined packages
+
+1) Predefined packages
+----------------------
+Built-in packages are called predefined packages.
+ex:
+	java.lang 
+	java.io
+	java.util
+	java.util.stream 
+	java.time 
+	java.text 
+	java.sql
+	javax.servlet 
+	and etc.
+
+
+2) Userdefined packages
+----------------------
+Packages which are created by the user based on the application requirements are called userdefined packages.
+
+To declare userdefined packages we need to use package keyword.
+
+syntax:
+-------
+	package <package_name>;
+
+It is always recommanded to declare package name in reverse order of url.
+ex:
+	package  com.google.www;
+
+ex:
+--
+package com.rt.www;
+import java.util.Calendar;
+class Test
+{
+	public static void main(String[] args)
+	{
+		Calendar c = Calendar.getInstance();
+	
+		int h = c.get(Calendar.HOUR_OF_DAY);
+		
+		if(h<12)
+			System.out.println("Good Morning");
+		else if(h<16)
+			System.out.println("Good Afternoon");
+		else if(h<20)
+			System.out.println("Good Evening");
+		else
+			System.out.println("Good Night");
+		
+	}
+}
+We can compile above program as follow.
+ex:
+		current directory 
+		    |
+	javac  -d   .   Test.java
+		|
+	destination folder
+
+
+We can execute above program as follow.
+ex:
+	java   com.rt.www.Test 
+		  |         |
+	package-name	class-name 
+
+
+Enum 
+====
+Enum concept introduced in Java 1.5.
+
+Enum is a group of named constants.
+
+Using enum we can create our own datatype called enumerated datatype.
+
+When compare to old language enum, java enum is more powerful.
+
+To declare enum we will use enum keyword.
+
+syntax:
+--------
+	enum  <enum_name>
+	{
+		value1,value2,valu3,...,valueN
+	}
+
+ex:
+	enum Months 
+	{
+		JAN,FEB,MAR
+	}
+
+Internal implementation of enum 
+-------------------------------
+Enum internally implemented as class concept and it extends with java.lang.Enum class.
+
+Enum constant is a reference variable of enum type.
+
+ex:
+
+enum Months			public final class Months extends java.lang.Enum 
+{				{
+	JAN,FEB,MAR	=>		public static final Months JAN = new Months();
+}					public static final Months FEB = new Months();
+					public static final Months MAR = new Months();
+				}
+
+ex:
+---
+enum Months
+{
+		JAN,FEB,MAR
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Months m = Months.JAN;
+		System.out.println(m);
+	}
+}
+
+ex:
+--
+enum Months
+{
+		JAN,FEB,MAR
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Months m = Months.FEB;
+		switch(m)
+		{
+			case JAN : System.out.println("January"); break;
+			case FEB : System.out.println("February"); break;
+			case MAR : System.out.println("March"); break;
+		}
+	}
+}
+
+java.lang.Enum
+---------------
+The power to enum will be inherited from java.lang.Enum class.
+
+It contains following two methods.
+
+1) values()
+----------
+	It returns group of constants from enum.
+
+2) ordinal() 
+------------
+	It returns ordinal number.
+
+ex:
+---
+enum Drinks
+{
+		COLA,COKE,PEPSI
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Drinks[] d = Drinks.values();
+		for(Drinks d1 : d)
+		{
+			System.out.println(d1.ordinal()+" -- "+d1);
+		}
+	}
+}
+
+Compare to old language enum, java enum is more powerful because in addition to constants 
+we can declare variables, methods and constructors.
+
+ex:
+---
+enum Cloths
+{
+	SILK,KHADI,COTTON;
+		
+	Cloths()
+	{
+		System.out.println("constructor");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Cloths c = Cloths.SILK;
+	}
+}
+
+ex:
+---
+enum Cloths
+{
+	SILK,KHADI,COTTON;
+		
+	static int i = 10;
+	
+	public static void main(String[] args)
+	{
+		System.out.println(i);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

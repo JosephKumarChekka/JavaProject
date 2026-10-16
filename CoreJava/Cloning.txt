@@ -1,0 +1,79 @@
+Cloning 
+=======
+The process of creating exact duplicate object is called cloning.
+
+We can perform cloning only for cloneable objects.
+
+To create a cloneable object our class must implements Cloneable interface.
+
+Cloneable is a marker interface which does not have any methods and constants.
+
+To perform cloning we required clone() method of Object class.
+ex:
+	protected native Object clone()throws CloneNotSupportedException 
+
+ex:
+---
+class Test implements Cloneable 
+{
+	int i = 10;
+	
+	public static void main(String[] args)throws CloneNotSupportedException 
+	{
+		Test t1 = new Test();	
+		System.out.println(t1.hashCode());
+		System.out.println(t1.i); // 10
+		
+		Test t2 = (Test)t1.clone();
+		System.out.println(t2.hashCode());
+		System.out.println(t2.i);
+	}
+}
+
+Q) What is the difference between shallow cloning and deep cloning?
+
+Shallow cloning 
+----------------
+The process of creating exact duplicate object reference is called shallow cloning.
+
+ex:
+--
+class Test 
+{
+	int i = 10;
+	
+	public static void main(String[] args)
+	{
+		Test t1 = new Test();
+		System.out.println(t1.hashCode()); // 2007331442
+		System.out.println(t1.i);  //10
+		
+		Test t2 = t1;
+		System.out.println(t2.hashCode()); //2007331442
+		System.out.println(t2.i); //10
+	}
+}
+Diagram: class40.1
+
+Deep cloning
+------------
+The process of creating exact duplicate object is called deep cloning.
+
+ex:
+---
+class Test implements Cloneable
+{
+	int i = 10;
+	
+	public static void main(String[] args)throws CloneNotSupportedException
+	{
+		Test t1 = new Test();
+		System.out.println(t1.hashCode()); // 1881129850
+		System.out.println(t1.i);  //10
+		
+		Test t2 = (Test)t1.clone();
+		System.out.println(t2.hashCode()); //1095293768
+		System.out.println(t2.i); //10
+	}
+}
+Diagram: class40.2

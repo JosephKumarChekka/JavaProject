@@ -1,0 +1,128 @@
+String 
+=======
+It is a collection of characters which is enclosed in a double quotation.
+ex:
+	"raisetech"
+
+
+case1:
+------
+Once if we create a String object we can't perform any changes. If we perform any changes 
+then for every change a new object will be created such behaviour is called immutability of 
+an object.
+
+Diagram: class40.3
+
+case2:
+------
+What is the difference between == and .equals() method?
+
+==
+----
+It is used for reference comparision or address comparision.
+It is used to compare primitive types and object types.
+
+ex:
+---
+class Test 
+{
+	public static void main(String[] args)
+	{
+		String s1 = new String("raisetech");		
+		String s2 = new String("raisetech");
+		System.out.println(s1==s2); // false 
+	}
+}
+
+.equals() 
+----------
+It is used for content comparision and it is a case sensitive.
+
+ex:
+---
+class Test 
+{
+	public static void main(String[] args)
+	{
+		String s1 = new String("raisetech");		
+		String s2 = new String("raisetech");
+		System.out.println(s1.equals(s2)); // true
+	}
+}
+
+case3:
+-----
+Once if we create a String object, two objects will be created. One is on heap and another is on SCP(String Constant Pool) area. But reference always points to heap area.
+
+Diagram: class40.4
+
+ 
+Object creation in SCP area is always optional. First JVM will check is there any object is created with same content or not. If it is created then JVM simply refers that object. If it is not created then JVM creates new object. Hence there is no chance of having duplicate objects in SCP area.
+
+Even though SCP objects do not have any reference, garbage collector can't access them.
+
+SCP objects will destroy automatically whenever JVM shutdowns or terminated.
+
+Diagram: class40.5
+
+String important methods 
+========================
+
+Q) Write a java program to find out length of the string?
+
+input:
+	raisetech 
+
+output:
+	9
+
+ex:
+---
+class Test 
+{
+	public static void main(String[] args)
+	{
+		String str="raisetech";
+		int len = str.length();
+		System.out.println(len);
+	}
+}
+
+
+Q) Write a java program to convert lowercase string to uppercase string?
+
+input:
+	raisetech
+
+output:
+	RAISETECH 
+
+
+class Test 
+{
+	public static void main(String[] args)
+	{
+		String str="raisetech";
+		str = str.toUpperCase();
+		System.out.println(str); 
+	}
+}
+
+Q) Write a java program to convert uppercase string to lowercase string?
+
+input:
+	RAISETECH
+	
+output:
+	raisetech	 
+
+
+class Test 
+{
+	public static void main(String[] args)
+	{
+		String str="RAISETECH";
+		str = str.toLowerCase();
+		System.out.println(str); 
+	}
+}

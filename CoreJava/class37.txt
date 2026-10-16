@@ -1,0 +1,285 @@
+Interface 
+=========
+It is a blue print of a class and it is a collection of abstract methods, default methods, static methods and private methods.
+
+Abstract methods are incomplete methods because they end with semicolon and do not have any body.
+ex:
+	public abstract void methodOne();
+
+It is not possible to create object for interfaces because an interface is an incomplete blueprint that lacks implementation and constructors.
+
+To write the implementation of abstract methods we will use implementation class.
+
+It is possible to create object for implementation class because it contains method with body.
+
+By default every abstract method is a public and abstract.
+ex:
+	void methodOne();
+
+Interface contains only constants i.e public static final.
+
+Diagram: class37.1
+
+If we know service requirements specification then we need to use interface. 
+
+To declare interface we will use interface keyword followed by a name.
+
+syntax:
+-----
+	interface <interface_name>
+	{
+		- abstract methods 
+		- default methods 
+		- static methods 
+		- private methods 
+		- constants
+	}
+
+ex:
+---
+interface Animal
+{
+	public abstract void sound();
+}
+class Dog implements Animal 
+{
+	@Override
+	public void sound()
+	{
+		System.out.println("Bow Bow");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Animal a = new Dog();
+		a.sound();
+	}
+}
+
+ex:
+---
+interface Animal
+{
+	public abstract void sound();
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		//Anonymous inner class
+		Animal a = new Animal()
+		{
+			public void sound()
+			{
+				System.out.println("Meow Meow");
+			}
+		};
+		a.sound();
+	}
+}
+
+If interface contains four methods then we need to override all methods otherwise we will get compile time error.
+
+ex:
+---
+interface ATM
+{
+	public abstract void deposit();
+	public void withdrawl();
+	abstract void ministatement();
+	void transfer();
+}
+class ATMImpl implements ATM
+{
+	@Override
+	public void deposit()
+	{
+		System.out.println("Deposit Method");
+	}
+	@Override
+	public void withdrawl()
+	{
+		System.out.println("Withdrawl Method");
+	}
+	@Override
+	public void ministatement()
+	{
+		System.out.println("MiniStmt Method");
+	}
+	@Override
+	public void transfer()
+	{
+		System.out.println("Transfer Method");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		ATM atm = new ATMImpl();
+		atm.deposit();
+		atm.withdrawl();
+		atm.ministatement();
+		atm.transfer();
+	}
+}
+
+A class can't extends more then one class.
+But interface can extends more then one interface.
+
+ex:
+---
+interface A 
+{
+	void methodOne();
+}
+interface B
+{
+	void methodTwo();
+}
+interface C extends A,B
+{
+	void methodThree();
+}
+class D implements C 
+{
+	@Override
+	public void methodOne()
+	{
+		System.out.println("MethodOne");
+	}
+	@Override
+	public void methodTwo()
+	{
+		System.out.println("MethodTwo");
+	}
+	@Override
+	public void methodThree()
+	{
+		System.out.println("MethodThree");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		C c = new D();
+		c.methodOne();
+		c.methodTwo();
+		c.methodThree();
+	}
+}
+
+A class can implements more then one interface.
+
+ex:
+---
+interface Father 
+{
+	double HT=6.2d;
+	void height();
+}
+interface Mother 
+{
+	double HT=5.8d;
+	void height();
+}
+class Child implements Father,Mother
+{
+	@Override
+	public void height()
+	{
+		double height = (Father.HT+Mother.HT)/2;
+		System.out.println("Child Height : "+height);
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Child c = new Child();
+		c.height();
+	}
+}
+
+
+Marker interface
+================
+If interface does not contain any methods and constants is called marker interface.
+
+In general, empty interface is known as marker interface.
+
+We have following list of marker interfaces in java.
+ex:
+	Serializable 
+	Cloneable 
+	Remote 
+	and etc.
+
+By using marker interfaces we will get some ability to do.
+
+
+Q) Write a program to achieve multiple inheritance in java?
+
+interface UPI
+{
+	void payUsingUpi();
+}
+interface Card
+{
+	void payUsingCard();
+}
+class Payment implements UPI,Card
+{
+	@Override
+	public void payUsingUpi()
+	{
+		System.out.println("UPI Payment");
+	}
+	@Override
+	public void payUsingCard()
+	{
+		System.out.println("Card Payment");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Payment p = new Payment();
+		p.payUsingUpi();
+		p.payUsingCard();
+	}
+}
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

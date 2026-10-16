@@ -1,0 +1,382 @@
+Inter-Thread Communication 
+==========================
+Inter thread communication is possible by using wait(),notify() and notifyAll() method.
+
+A thread which is waiting for notification has to call wait() method.
+
+A thread which is giving notification has to call notify() or notifyAll() method.
+
+A wait(), notify() and notifyAll() method present in Object class.
+
+To call wait(), notify() and notifyAll() method compulsary we required synchronized area.
+
+If we call wait() method, thread will release the lock immediately and goes to waiting state.
+
+If we call notify() and notifyAll() , our thread will release the lock but not immediately.
+
+Exception wait(), notify() or notifyAll() method there is no way to release the lock.
+
+ex:
+---
+class MyThread extends Thread 
+{
+	int total = 0;
+	public void run()
+	{
+		synchronized(this)
+		{
+			System.out.println("Child started calculation");
+			
+			for(int i=1;i<=10;i++)
+			{
+				total+=i;
+			}
+			
+			System.out.println("Child giving notification ");
+			this.notify();
+		}
+	}
+}
+class Test
+{
+	public static void main(String[] args)throws InterruptedException 
+	{
+		MyThread t = new MyThread();
+		t.start();
+		synchronized(t)
+		{
+			System.out.println("Main method is waiting");
+			t.wait();
+			System.out.println("Main method got notification");
+			System.out.println(t.total);
+		}
+	}
+}
+
+
+Java 8 Features
+===============
+
+
+Functional interface 
+====================
+Function interface introduced in Java 8.
+
+Interface which contains only one abstract method is called functional interface.
+
+It can have any number of default methods, static methods and private methods.
+
+We have following list of function interfaces in java.
+ex:
+	Comparable - compareTo() method 
+	Runnable   - run() method 
+	Comparator - compare() method 
+	ActionListener - actionPerformed() method 
+	and etc.
+
+It is also known as SAM or Single Abstract Method interface.
+
+The main objective of functional interface is to achieve functional programming.
+ex:
+	a = f1(){
+
+	}
+
+	f1(f2(){})
+	{
+	}
+
+@FunctionalInterface annotation is uesd to declare function interface which is optional.
+
+ex:
+	@FunctionalInterface 
+	interface <interface_name>
+	{
+		- // 1 abstract method 
+		- // default methods 
+		- // static methods
+		- // private methods 
+	}
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract void deposit();
+}
+class ATMImpl implements ATM
+{
+	public void deposit()
+	{
+		System.out.println("Deposit Method");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		ATM atm = new ATMImpl();
+		atm.deposit();
+	}
+}
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract void deposit();
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		// anonymous inner class
+		ATM atm = new ATM()
+		{
+			public void deposit()
+			{
+				System.out.println("My Deposit Method");
+			}
+		};
+		atm.deposit();
+	}
+}
+
+
+Lambda Expression 
+=================
+Lamda expression introduced in Java 8.
+
+We can use lambda expression when we have functional interface.
+
+Lambda expression is used to concise the code.
+
+Lambda expression consider as function.
+
+The main objective of lamda expression is to achieve functional programming.
+
+Lambda expression does not allow  name, return type and modifier.
+
+ex:
+	Java Method 
+	------------
+	public void methodOne()
+	{
+		System.out.println("Hello");
+	}
+
+	Lambda expression 
+	----------------
+	()->
+	{
+		System.out.println("Hello");
+	};
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract void deposit();
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		ATM atm = ()->{
+			System.out.println("Deposit Method");
+		};
+		atm.deposit();
+	}
+}
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract void deposit(int amount);
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		ATM atm = (amount)->{
+			System.out.println("Deposit Amount : "+amount);
+		};
+		atm.deposit(10000);
+	}
+}
+
+
+ex:
+---
+@FunctionalInterface
+interface ATM
+{
+	//abstract method 
+	public abstract String deposit(int amount);
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		ATM atm = (amount)->{
+			return "Deposit Amount : "+amount;
+		};
+		System.out.println(atm.deposit(20000));
+	}
+}
+
+
+Default methods in interface
+============================
+Default methods in interface introduced in Java 8.
+
+Java provides facility to declare a method in interface and tagged with default keyword.
+
+Default methods are non-abstract method.
+
+Default methods can be override.
+
+syntax:
+-------
+	default  returntype  method_name()
+	{
+		- // some logic
+	}
+
+
+ex:
+--
+interface Animal 
+{
+	//abstract method 
+	public abstract void sound();
+	
+	//default method 
+	default void eat()
+	{
+		System.out.println("Animal Eat's ");
+	}
+}
+class Dog implements Animal
+{
+	@Override
+	public void sound()
+	{
+		System.out.println("Bow Bow");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Animal a = new Dog();
+		a.sound();
+		a.eat();
+	}
+}
+
+ex:
+---
+interface Animal 
+{
+	//abstract method 
+	public abstract void sound();
+	
+	//default method 
+	default void eat()
+	{
+		System.out.println("Animal Eat's ");
+	}
+}
+class Dog implements Animal
+{
+	@Override
+	public void sound()
+	{
+		System.out.println("Bow Bow");
+	}
+	
+	@Override
+	public void eat()
+	{
+		System.out.println("Pedigree");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Animal a = new Dog();
+		a.sound();
+		a.eat();
+	}
+}
+
+
+Static methods in interface
+============================
+Static methods in interface introduced in Java 8.
+
+Java provides facility to declare a method in interface and tagged with static keyword.
+
+Static methods are non-abstract method.
+
+Static methods can't be override.
+
+syntax:
+-------
+	static  returntype  method_name()
+	{
+		- // some logic
+	}
+
+ex:
+---
+interface Payment
+{
+	static void  paymentMethod()
+	{
+		System.out.println("Credit Card");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Payment.paymentMethod();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

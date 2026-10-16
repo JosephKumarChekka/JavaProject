@@ -1,0 +1,318 @@
+Operators 
+=========
+Operator is a symbol which is used to perform some operations on operands.
+ex:
+	c = a + b; 
+
+	Here a,b and c are operands.
+	Here = and + are operators.
+
+We have different types of operators in java.
+
+1) Arithmetic operators 
+2) Assignment operators 
+3) Ternary/Conditional operators 
+4) Bitwise operators 
+5) Logical operators
+6) Relational operators
+7) Shift operators
+8) Unary operators 
+
+
+Operators Precedence 
+--------------------
+Precedence		Operator
+-----------		--------
+1			*, / , %
+2			+, - 
+3			<<, >>
+
+
+1) Arithmetic operators 
+-----------------------
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10+4*3+6/4+5%2+6*2+4%20+10/20+9-20;
+		System.out.println(i); 
+	}
+}
+/*
+		10+12+1+1+12+4+0+9-20
+		49 - 20
+		29
+*/
+
+
+2) Assignment operators 
+-----------------------
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10;
+		i = 20;
+		i = 30;
+		System.out.println(i); // 30
+	}
+}
+Note:
+-----
+	Re-initialization is possible in java.
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		final int i = 10;
+		i = 20;
+		i = 30;
+		System.out.println(i); // C.T.E 
+	}
+}
+Note:
+-----
+	We can't modify final variable 
+
+ex:
+--
+class Test  
+{
+	//global variable 
+	static int i = 10;
+	
+	public static void main(String[] args) 
+	{
+		//local variable 
+		int i = 20;
+		
+		System.out.println(i); // 20
+	}
+}
+o/p:
+	Here priority goes to local variable
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i=1,2,3,4,5;
+		System.out.println(i);
+	}
+}
+	
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i,j;
+		
+		i = j = 100;
+		
+		System.out.println(i+" "+j);
+	}
+}
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10;
+		
+		i+=5; // i = i + 5 
+		
+		System.out.println(i); //15
+	}
+}
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10;
+		
+		i-=20; // i = i - 20 
+		
+		System.out.println(i); //-10
+	}
+}
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10;
+		
+		i*=5;  // i = i * 5
+		
+		System.out.println(i); //50
+	}
+}
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10;
+		
+		i/=5;  // i = i / 5
+		
+		System.out.println(i); //2
+	}
+}
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int i = 10;
+		
+		i%=5;  // i = i % 5
+		
+		System.out.println(i); //0
+	}
+}
+
+3) Ternary/Conditional operators
+--------------------------------
+syntax
+------	
+	(condition)?value1:value2;
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		String s = (true)?"Hi":"Bye";
+		System.out.println(s); // Hi 
+	}
+}
+
+ex:
+---
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		var b = (5>20)? true : false;
+		System.out.println(b); // false
+	}
+}
+
+Q) Write a java program to find out greatest of two numbers?
+
+import java.util.Scanner;
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter two numbers :");
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		
+		var max = (a>b)?a:b;
+		
+		System.out.println(max+" is greatest");
+	}
+}
+
+Q) Write a java program to find out greatest of three numbers?
+
+import java.util.Scanner;
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter two numbers :");
+		int a = sc.nextInt();  //5
+		int b = sc.nextInt();  //10
+		int c = sc.nextInt();  //2
+		
+		var max = (a>b)?((a>c)?a:c):((b>c)?b:c);
+		
+		System.out.println(max+" is greatest");
+	}
+}
+
+
+How to convert decimal number to binary number 
+----------------------------------------------
+	10 - decimal number 
+	1010 - binary number 
+
+	
+	2|10
+         	---- 0 
+	2|5
+	 ---- 1 
+	2|2
+	 ---- 0 	^
+	  1	|
+	-------------
+	1010
+
+How to convert binary number to decimal number 
+----------------------------------------------
+	1010 - binary number 
+	10 - decimal number 
+
+	1010 <-----
+
+	0*1 + 1*2 + 0*4 + 1*8 
+
+	0 + 2 + 0 + 8 
+
+	10
+
+4) Bitwise operators
+--------------------
+
+Bitwise AND operator (&)
+-------------------------
+Bitwise AND operator deals with binary numbers.
+
+Truth table 
+-----------
+T	T	=  T
+T	F	=  F
+F	T	=  F
+F	F	=  F 
+
+ex:
+---
+
+
+ 
+
+
+
+
+
+
+
+
+
+

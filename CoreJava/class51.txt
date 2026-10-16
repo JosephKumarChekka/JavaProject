@@ -1,0 +1,1012 @@
+Set 
+====
+It is a child interface of collection interface.
+
+If we want to represent group of individual objects in a single entity which duplicate objects are not allowed and order is not preserved then we need to use Set interface.
+
+Diagram: class51.1
+
+
+Set.of()
+========
+It is introduced in Java 9.
+
+It gives immutable object.
+
+It does not allow duplicates
+
+It does not allow null.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Set<Integer> set = Set.of(7,2,9,1,5);
+		System.out.println(set);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Set<Integer> set = Set.of(7,2,9,1,5);
+		set.add(10);
+		System.out.println(set);
+	}
+}
+o/p:
+	R.E UnsupportedOperationException
+
+
+ex:-
+----
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Set<Integer> set = Set.of(7,2,9,1,5);
+		set.remove(2);
+		System.out.println(set);
+	}
+}
+o/p:
+	R.E UnsupportedOperationException
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Set<Integer> set = Set.of(7,2,9,1,5,7);
+		System.out.println(set);
+	}
+}
+o/p:
+	R.E IllegalArgumentException
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Set<Integer> set = Set.of(7,2,9,1,5,null);
+		System.out.println(set);
+	}
+}
+
+o/p:
+	R.e NullPointerException
+
+
+HashSet
+========
+The underlying data structure is Hashtable.
+
+Duplicate objects are not allowed.
+
+Insertion order is not preserved because it takes hashcode of an object.
+
+Hetrogeneous objects are allowed.
+
+Null insertion is possible.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		HashSet hs = new HashSet();
+		hs.add("ten");
+		hs.add("four");
+		hs.add("one");
+		hs.add("six");
+		System.out.println(hs); // [six, four, one, ten]
+		
+		hs.add("one");
+		System.out.println(hs); // [six, four, one, ten]
+		
+		hs.add(10);
+		System.out.println(hs); // [six, four, one, 10, ten]
+		
+		hs.add(null);
+		System.out.println(hs); // [null, six, four, one, 10, ten]
+	}
+}
+
+LinkedHashSet
+==============
+It is a child class of HashSet class.
+
+LinkedHashSet is exactly same as HashSet class with following differences.
+
+HashSet						LinkedHashSet
+---------------					--------------
+The underlying data structure is 		The underlying data structure is
+Hashtable.					Hashtable and LinkedList.
+
+Insertion order is not preserved.		Insertion order is preserved.
+
+It is introduced in 1.2 version.		It is introduced in 1.4 version.
+
+
+
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		LinkedHashSet lhs = new LinkedHashSet();
+		lhs.add("ten");
+		lhs.add("four");
+		lhs.add("one");
+		lhs.add("six");
+		System.out.println(lhs); // [ten,four,one,six]
+		
+		lhs.add("one");
+		System.out.println(lhs); // [ten,four,one,six]
+		
+		lhs.add(10);
+		System.out.println(lhs); // [ten,four,one,six,10]
+		
+		lhs.add(null);
+		System.out.println(lhs); // [ten,four,one,six,10,null]
+	}
+}
+
+TreeSet 
+=======
+The underlying data structure is Balanced Tree.
+
+Duplicate objects are not allowed.
+
+Insertion order is not preserved because it takes sorting order of an object.
+
+Hetrogeneous objects are not allowed otherwise we will get ClassCastException.
+
+Null insertion is not possible otherwise we will get NullPointerException.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		TreeSet ts = new TreeSet();
+		ts.add(5);
+		ts.add(1);
+		ts.add(9);
+		ts.add(10);
+		System.out.println(ts); // [1,5,9,10]
+		
+		ts.add(1);
+		System.out.println(ts); // [1,5,9,10]
+		
+		//ts.add("Hi");
+		//System.out.println(ts); // R.E ClassCastException
+		
+		//ts.add(null);
+		//System.out.println(ts); // R.E NullPointerException
+	}
+}
+
+Interview Questions 
+===================
+Q) Write a java program to remove duplicate elements from given array?
+
+Input:
+	5 8 2 3 4 2 1 8 
+
+output:
+	5 8 2 3 4 1 
+
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		int[] arr = {5,8,2,3,4,2,1,8};
+		
+		Set<Integer> set = new LinkedHashSet<>();
+		
+		for(int i : arr)
+		{
+			set.add(i);
+		}
+		
+		for(int ele : set)
+		{
+			System.out.print(ele+" ");
+		}
+	}
+}
+
+
+Q) What is the difference between Comparable and Comparator interface?
+
+Comparable 
+----------
+Comparable is an interface which is present in java.lang package.
+
+Comparable interface contains only one method i.e compareTo().
+
+If we depend upon natural default sorting order then we need to use Comparable interface.
+
+ex:
+	obj1.compareTo(obj2)
+
+	It returns -ve if obj1 comes before obj2
+	It returns +ve if obj1 comes after obj2
+	It returns 0 if both objects are same 
+ex:
+---
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		System.out.println("A".compareTo("Z")); // -25
+		
+		System.out.println("Z".compareTo("A")); // 25
+		
+		System.out.println("K".compareTo("K")); // 0 
+	}
+}
+
+	
+Comparator interface
+--------------------
+Comparator interface present in java.util package.
+
+Comparator interface contains following two methods i.e compare() and equals() method.
+
+If we depend upon customized sorting order then we need to use Comparator interface.
+
+ex:
+	public int compare(Object1,Object2)
+
+	It returns +ve if obj1 comes before obj2
+	It returns -ve if obj1 comes after obj2
+	It returns 0 if both objects are same 
+
+Implementation of equals() method is optional because it is present in Object class which is 
+by default available to the class through inheritance. 
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		TreeSet<Integer> ts = new TreeSet<>(new MyComparator());
+		ts.add(5);
+		ts.add(1);
+		ts.add(7);
+		ts.add(10);
+		System.out.println(ts); // [10, 7, 5, 1]
+	}
+}
+class MyComparator implements Comparator 
+{
+	public int compare(Object obj1,Object obj2)
+	{
+		Integer i1 = (Integer)obj1;
+		Integer i2 = (Integer)obj2;
+		if(i1<i2)
+			return 1;
+		else if(i1>i2)
+			return -1;
+		else
+			return 0;
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		TreeSet<Integer> ts = new TreeSet<>(new MyComparator());
+		ts.add(5);
+		ts.add(1);
+		ts.add(7);
+		ts.add(10);
+		System.out.println(ts); // [1,5,7,10]
+	}
+}
+class MyComparator implements Comparator 
+{
+	public int compare(Object obj1,Object obj2)
+	{
+		Integer i1 = (Integer)obj1;
+		Integer i2 = (Integer)obj2;
+		if(i1<i2)
+			return -1;
+		else if(i1>i2)
+			return 1;
+		else
+			return 0;
+	}
+}
+
+
+Q) Write a java program to compare two dates?
+
+
+import java.time.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		LocalDate date1 = LocalDate.now();
+		LocalDate date2 = LocalDate.of(2026,9,15);
+		
+		if(date1.compareTo(date2)>0)
+			System.out.println("date1 is greatest");
+		else if(date1.compareTo(date2)<0)
+			System.out.println("date2 is greatest");
+		else
+			System.out.println("Both are same");
+	}
+}
+
+Map
+=====
+It is not a child interface of Collection interface.
+
+If we want to represent group of individual objects in key and value pair then we need to use Map interface.
+
+Key and value both must be objects.
+
+Key can't be null but value can be null.
+
+Each key and value pair is known as one-entry.
+
+Diagram: class51.2
+
+Map.of()
+=========
+It is introduced in Java 9.
+
+It gives immutable object.
+
+key and value both can't be null.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Map<Integer,String> map = Map.of(1,"one",2,"two",3,"three");
+		System.out.println(map);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Map<Integer,String> map = Map.of(1,"one",2,"two",3,"three",null,null);
+		System.out.println(map);
+	}
+}
+o/p:
+	R.E NullPointerException 
+
+
+HashMap 
+=======
+The underlying data structure is Hashtable.
+
+Key can't be duplicate but value can be duplicate.
+
+Insertion order is not preserved because it takes hashcode of the key.
+
+Hetrogeneous objects are allowed for both key and value.
+
+Null insertion is possible for both key and value.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		HashMap hm = new HashMap();
+		hm.put(1,"one");
+		hm.put(10,"ten");
+		hm.put(7,"seven");
+		hm.put(5,"five");
+		System.out.println(hm);//{1=one, 5=five, 7=seven, 10=ten}
+		
+		hm.put(1,"gogo");
+		System.out.println(hm);//{1=gogo, 5=five, 7=seven, 10=ten} 
+		
+		hm.put("six",6);
+		System.out.println(hm);//{1=gogo, six=6, 5=five, 7=seven, 10=ten}
+		
+		hm.put(null,null);
+		System.out.println(hm);//{null=null, 1=gogo, six=6, 5=five, 7=seven, 10=ten}
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		HashMap<Integer,String> hm = new HashMap<>();
+		hm.put(1,"one");
+		hm.put(10,"ten");
+		hm.put(7,"seven");
+		hm.put(5,"five");
+		
+		Set s = hm.keySet();
+		System.out.println(s); 
+		
+		Collection c = hm.values();
+		System.out.println(c); 
+		
+		Set s1  = hm.entrySet();
+		System.out.println(s1);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Map<Integer,String> map = new HashMap<>();
+		map.put(1,"one");
+		map.put(10,"ten");
+		map.put(7,"seven");
+		map.put(5,"five");
+		
+		for(Map.Entry<Integer,String> entry : map.entrySet())
+		{
+			System.out.println(entry.getKey()+"="+entry.getValue());
+		}
+	}
+}
+
+
+LinkedHashMap
+==============
+It is a child class of HashMap class.
+
+LinkedHashMap is exactly same as HashMap with following differences.
+
+HashMap						LinkedHashMap 
+----------------				-----------------
+The underlying data structure is Hashtable.	The underlying data structure is Hashtable 
+						and LinkedList.
+
+Insertion order is not preserved.		Insertion order is preserved.
+
+It is introduced in 1.2 version.		It is introduced in 1.4 version.
+
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		LinkedHashMap lhm = new LinkedHashMap<>();
+		lhm.put(1,"one");
+		lhm.put(10,"ten");
+		lhm.put(7,"seven");
+		lhm.put(5,"five");
+		System.out.println(lhm); // {1=one,10=ten,7=seven,5=five}	
+		
+		lhm.put(1,"gogo");
+		System.out.println(lhm); // {1=gogo,10=ten,7=seven,5=five}	
+		
+		lhm.put("six",6);
+		System.out.println(lhm); // {1=gogo,10=ten,7=seven,5=five,six=6}
+	
+		lhm.put(null,null);
+		System.out.println(lhm); // {1=gogo,10=ten,7=seven,5=five,six=6,null=null}
+	}
+}
+
+TreeMap 
+======
+The underlying data structure is RED BLACK TREE.
+
+Key can't be duplicate but value can be duplicate.
+
+Insertion order is not preserved because it takes sorting order of the key.
+
+If we depend upon default natural sorting then key must be homogenous and comparable.
+
+If we depend upon customized sorting order the key must be hetrogeneous and non-comparable.
+
+Key can't be null but value can be null.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		TreeMap<Integer,String> tm = new TreeMap<>();
+		tm.put(1,"one");
+		tm.put(10,"ten");
+		tm.put(7,"seven");
+		tm.put(5,"five");
+		System.out.println(tm); // {1=one, 5=five, 7=seven, 10=ten}	
+		
+		tm.put(1,"gogo");
+		System.out.println(tm); // {1=gogo, 5=five, 7=seven, 10=ten}	
+		
+		tm.put(4,null);
+		System.out.println(tm); // {1=gogo, 4=null, 5=five, 7=seven, 10=ten}
+		
+		//tm.put(null,"four");
+		//System.out.println(tm); // R.E NullPointerException
+	}
+}
+
+
+Hashtable 
+==========
+The underlying data structure is Hashtable.
+
+Key can't be duplicate but value can be duplicate.
+
+Insertion order is not prserved because it takes descending order of key.
+
+Hetrogeneous objects are allowed for both key and value.
+
+Null insertion is not possible for both key and value.
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Hashtable ht = new Hashtable();
+		ht.put(1,"one");
+		ht.put(10,"ten");
+		ht.put(7,"seven");
+		ht.put(5,"five");
+		System.out.println(ht); // {10=ten,7=seven,5=five,1=one}	
+		
+		ht.put(1,"gogo");
+		System.out.println(ht); // {10=ten,7=seven,5=five,1=gogo}	
+		
+		ht.put("four",4);
+		System.out.println(ht); // {10=ten,7=seven,5=five,"four"=4,1=gogo}
+		
+		//ht.put(null,null);
+		//System.out.println(ht); // R.E NullPointerException
+	}
+}
+
+
+Interview Question 
+=================
+
+Q) Write a java program to display occurance of word in a given string?
+
+input:
+	this is is java java class 
+
+output:
+	this=1,is=2,java=2,class=1
+
+
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "this is is java java class";
+		String[] sarr = str.split(" ");
+		
+		Map<String,Integer> map = new LinkedHashMap<String,Integer>();
+		for(String s : sarr)
+		{
+			if(map.containsKey(s))
+			{
+				map.put(s,map.get(s)+1);
+			}
+			else
+			{
+				map.put(s,1);
+			}
+		}
+		System.out.println(map);
+	}
+}
+
+
+
+Q) Write a java program to display occurance of character in a given string?
+
+input:
+	java
+
+output:
+	j=1,a=2,v=1
+
+
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "java";
+		char[] carr = str.toCharArray();
+		
+		Map<Character,Integer> map = new LinkedHashMap<Character,Integer>();
+		for(char ch : carr)
+		{
+			if(map.containsKey(ch))
+			{
+				map.put(ch,map.get(ch)+1);
+			}
+			else
+			{
+				map.put(ch,1);
+			}
+		}
+		System.out.println(map);
+	}
+}
+
+Types of cursors 
+================
+Cursors are used to read objects one by one from Collections.
+
+We have three types of cursors.
+
+1) Enumeration 
+
+2) Iterator 
+
+3) ListIterator 
+
+
+Types of cursors in java
+========================
+Cursors are used to read objects one by one from Collections.
+
+We have three types of cursors.
+
+1) Enumeration 
+
+2) Iterator 
+
+3) ListIterator 
+
+1) Enumeration
+--------------
+It is used to read objects one by one from legacy Collection objects.
+
+Enumeration interface contains following two methods.
+ex:
+	public boolean hasMoreElements()
+	public Object nextElement() 
+
+We can create Enumeration object as follow.
+ex:
+	Enumeration e = v.elements();
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Vector<Integer> v = new Vector<>();
+		for(int i=1;i<=10;i++)
+		{
+			v.add(i);
+		}
+		Enumeration e = v.elements();
+		while(e.hasMoreElements())
+		{
+			int i = (Integer)e.nextElement();
+			System.out.println(i);
+		}
+	}
+}
+
+Limitations with Enumeration 
+----------------------------
+Enumeration is used to read object one by one from legacy Collection objects. Hence it is not a universal cursor.
+
+Using Enumeration we can perform read operation but not remove operation.
+
+To overcome above limitation we need to use Iterator.
+
+
+2) Iterator 
+--------------
+It is used to read objects one by one from any Collection object. Hence it is a universal cursor.
+
+Using Iterator we can perform read and remove operations.
+
+We can create Iterator object as follow.
+
+ex:
+	Iterator itr = al.iterator();
+
+Iterator interface contains following three methods.
+ex:
+	public boolean hasNext()	
+	public Object next()
+	public void remove()
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<Integer> al = new ArrayList<>();
+		for(int i=1;i<=10;i++)
+		{
+			al.add(i);
+		}
+		Iterator itr = al.iterator();
+		while(itr.hasNext())
+		{
+			int i = (Integer)itr.next();
+			if(i%2==0)
+				System.out.print(i+" ");
+			else
+				itr.remove();
+		}
+		System.out.println("\n"+al); //[2,4,6,8,10]
+	}
+}
+
+Limitations with Iterator
+------------------------
+Enumeration and Iterator is used to read objects in forward direction but not in backward direction. Hence they are not bi-directional cursors.
+
+Using Iterator we can perform read and remove operation but not adding and replacement of new objects.
+
+To overcome this limitation Sun Micro System introduced ListIterator. 
+
+
+3) ListIterator 
+---------------
+ListIterator is a child interface of Iterator.
+
+It is used to read objects one by one from List Collection objects.
+
+Using ListIterator we can perform read, remove  , adding and replacement of new objects.
+
+We can create ListIterator object as folow.
+ex:
+	ListIterator litr = al.listIterator();
+
+ListIterator interface contains following 9 methods.
+ex:
+	public boolean hasNext()
+	public Object next()
+	public void remove()
+	public boolean hasPrevious()
+	public Object previous()
+	public int nextIndex()
+	public int previousIndex() 
+	public void add(E) 
+	public void set(E)
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<String> al = new ArrayList<>();
+		al.add("venki");
+		al.add("bala");
+		al.add("nag");
+		al.add("chiru");
+
+		ListIterator litr = al.listIterator();
+		while(litr.hasNext())
+		{
+			String s = (String) litr.next();
+			System.out.println(s); 
+		}
+	}
+}
+
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<String> al = new ArrayList<>();
+		al.add("venki");
+		al.add("bala");
+		al.add("nag");
+		al.add("chiru");
+
+		ListIterator litr = al.listIterator(al.size());
+		while(litr.hasPrevious())
+		{
+			String s = (String) litr.previous();
+			System.out.println(s); 
+		}
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<String> al = new ArrayList<>();
+		al.add("venki");
+		al.add("bala");
+		al.add("nag");
+		al.add("chiru");
+
+		ListIterator litr = al.listIterator();
+		while(litr.hasNext())
+		{
+			String s = (String) litr.next();
+			if(s.equals("bala"))
+			{
+				litr.remove();
+			}
+		}
+		System.out.println(al);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<String> al = new ArrayList<>();
+		al.add("venki");
+		al.add("bala");
+		al.add("nag");
+		al.add("chiru");
+
+		ListIterator litr = al.listIterator();
+		while(litr.hasNext())
+		{
+			String s = (String) litr.next();
+			if(s.equals("chiru"))
+			{
+				litr.add("pavan");
+			}
+		}
+		System.out.println(al);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<String> al = new ArrayList<>();
+		al.add("venki");
+		al.add("bala");
+		al.add("nag");
+		al.add("chiru");
+
+		ListIterator litr = al.listIterator();
+		while(litr.hasNext())
+		{
+			String s = (String) litr.next();
+			if(s.equals("venki"))
+			{
+				litr.set("ram");
+			}
+		}
+		System.out.println(al);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

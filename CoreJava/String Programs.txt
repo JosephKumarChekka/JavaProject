@@ -1,0 +1,335 @@
+Q) Write a java program to concatinate two strings?
+
+input:
+	raise
+	tech 
+output:
+	raisetech 
+
+ex:
+--
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String s1 = "raise";
+		String s2 = "tech";
+		String result = s1.concat(s2);
+		System.out.println(result);
+	}
+}
+
+Q) Write a java program to check both the strings are equal or not?
+
+input:
+	raisetech
+	raisetech 
+
+output:
+	Both are equals 
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String s1 = "raisetech";
+		String s2 = "raisetech";
+		if(s1.equals(s2))
+			System.out.println("Both are Equals");
+		else
+			System.out.println("Both are not Equals");
+	}
+}
+
+
+Q) Write a java program to check both the strings are equal or not?
+
+input:
+	raisetech
+	RAISETECH
+
+output:
+	Both are equals
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String s1 = "raisetech";
+		String s2 = "RAISETECH";
+		if(s1.equalsIgnoreCase(s2))
+			System.out.println("Both are Equals");
+		else
+			System.out.println("Both are not Equals");
+	}
+}
+
+
+Q) Write a java program to display the string character by character?
+
+input:
+	hello
+output:
+	h
+	e
+	l
+	l
+	o 
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str="hello";
+		
+		for(int i=0;i<str.length();i++)
+		{
+			System.out.println(str.charAt(i));
+		}
+	}
+}
+
+
+Q) Write a java program to trim the string?
+
+input:
+	" raise tech "
+
+output:
+	raise tech
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str=" raise tech ";
+		System.out.println(str.length());
+		str = str.trim();
+		System.out.println(str.length());
+	}
+}
+
+
+Q) Write a java program to check given string contains only alphabets?
+
+input:
+	raisetech
+
+output:
+	True 
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str="raisetech12";
+		if(str.matches("^[A-Za-z]+"))
+			System.out.println("True");
+		else
+			System.out.println("False");
+	}
+}
+
+
+Q) Write a java program to check given string contains only digits?
+
+input:
+	1234
+
+output:
+	True 
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str="1234";
+		if(str.matches("\\d+"))
+			System.out.println("True");
+		else
+			System.out.println("False");
+	}
+}
+
+Q) Write a java program to display the output in a given format?
+
+input:
+	this is java class 
+
+output:
+	this,is,java,class 
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "this is java class";
+		str = str.join(",", str.split(" "));
+		System.out.println(str); 
+	}
+}
+
+Interview Programs 
+==================
+
+Q) Write a java program to remove special characters from given string?
+
+input:
+	R@ai_s%e$Te!c*h
+output:
+	RaiseTech 
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "R@ai_s%e$Te!c*h";
+		str = str.replaceAll("[^A-Za-z0-9]","");
+		System.out.println(str);
+	}
+}
+
+
+Q) Write a java program to remove all the spaces from given string?
+
+input:
+	R ais eTe ch
+output:
+	RaiseTech 
+
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "R ais eTe ch";
+		str = str.replaceAll("\\s","");
+		System.out.println(str);
+	}
+}
+
+
+Q) Write a java program to the string in a given format?
+
+input:
+	abababa
+output:
+	aba
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "abababa";
+		str = str.replaceAll("aba","a");
+		System.out.println(str); 
+	}
+}
+
+Q) Write a java program to delete the word from given string?
+
+input:
+	str = this is java class
+	delete = is 
+output:
+	th java class 	
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "this is java class";
+		String delete = "is";
+		str = str.replaceAll(delete,"");
+		System.out.println(str);
+	}
+}
+
+Q) Write a java program to concatinate two strings?
+
+Input:
+	Raise12
+	Tech28
+Output:
+	RaiseTech40
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String s1 = "Raise12";
+		String s2 = "Tech28";
+		
+		String word1  = s1.replaceAll("[^A-Za-z]","");  // Raise 
+		int num1 = Integer.parseInt(s1.replaceAll("[^0-9]","")); // 12
+		
+		String word2 = s2.replaceAll("[^A-Za-z]",""); // Tech
+		int num2 = Integer.parseInt(s2.replaceAll("[^0-9]","")); // 28
+		
+		String word = word1 + word2;
+		int num = num1 + num2;
+		
+		System.out.println(word+num);
+	}	
+}
+
+
+Q) Write a java program to find out number of digits, sum of digits and check that number is even or odd?
+
+Input:
+	NEX123
+
+Output:
+	No of digits : 3
+	Sum of digits : 6
+	It is even number 
+	
+
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "NEX123";
+		
+		String newStr = str.replaceAll("[^0-9]","");
+		
+		System.out.println("No of Digits : "+newStr.length());
+		
+		int sum = 0;
+		for(char ch : newStr.toCharArray())
+		{
+			//convert character to number 
+			int n = Character.getNumericValue(ch);
+			sum += n;
+		}
+		System.out.println("Sum of Digits : "+sum);
+		
+		System.out.println((sum%2==0)?"It is even number":"It is odd number");
+	}	
+}
+
+Q) Write a java program to sort the string?
+
+input:
+	dacbe
+output:
+	abcde 
+
+import java.util.Arrays;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		String str = "dacbe";
+		char[] carr = str.toCharArray();
+		Arrays.sort(carr);
+		str = new String(carr);
+		System.out.println(str);
+	}	
+}

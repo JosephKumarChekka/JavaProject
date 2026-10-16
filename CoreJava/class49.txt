@@ -1,0 +1,438 @@
+Generics 
+========
+Arrays are typesafe.
+It means we can give guarantee that what type of elements are present in arrays.
+ex:
+	int[] arr = new int[3];
+	arr[0] = 10;
+	arr[1] = 20;
+	arr[2] = 30;
+
+If requirement is there to store String values then it is recommanded to use String[] array.
+ex:
+	String[] sarr = new String[3];
+	sarr[0] = "Hi";
+	sarr[1] = "Hello";
+	sarr[2] = "Bye";
+
+Whenever are retrieving the data from array we don't need to perform any typecasting. 
+ex:
+	String[] sarr = new String[3];
+	sarr[0] = "Hi";
+	sarr[1] = "Hello";
+	sarr[2] = "Bye";
+	-
+	-
+	String val1 = sarr[0];
+
+Collections are not typesafe.
+It means we can't give guarantee that what type of elements are present in Collections.
+
+If requirement is there to store String values then it is never recommanded to use ArrayList because we won't get any compile time error or runtime error but sometimes our program get failure.
+ex:
+	ArrayList al = new ArrayList();
+	al.add("Hi");
+	al.add(10);
+	al.add(10.56d);
+
+At the time of retrieving the data from Collections compulsary we need to perform typecasting.
+ex:
+	
+	ArrayList al = new ArrayList();
+	al.add("Hi");
+	al.add(10);
+	al.add(10.56d);
+	-
+	-
+	String val = (String) al.get(0);
+
+To overcome above limitations Sun Micro System introduced Generics concept in 1.5 version.
+
+The main objective of generics are 
+
+1) To make Collections as typesafe.
+
+2) To avoid typecasting problem.
+
+java.util package
+=================
+
+Q) What is the difference between Arrays and Collections ?
+
+Arrays						Collections
+-------						------------
+It is a collection of homogeneous data 		It is a collection of homogeneous and 
+elements.					hetrogeneous data elements.
+
+Performance point of view arrays are 		Memory point of view Collections are 
+recommanded to use.				recommanded to use.
+
+It is fixed in size.				It is growable in nature.
+
+Arrays are not implemented based on 		Collections are implemented based on 
+data structure concept. Hence we can't 		data structure concept. Hence we can
+expect any readymade methods.			expect readymade methods.
+
+It can hold primitive types and object types.	It can hold only object types.
+
+Collection Framework 
+====================
+It defines several classes and interfaces to represent group of objects in a single entity.
+
+ex:
+		Java			C++
+		-----			-----
+		Collection		Containers
+		Collection Framework	STL (Standard Template Library)
+
+
+Collection 
+==========
+Collection is an interface which is present in java.util package.
+
+It is a root interface for entire Collection framework.
+
+If we want to represent group of individual objects in a single entity then we need to use Collection interface.
+
+Collection interface contains following methods which is available for entire Collection objects.
+ex:
+	cmd> javap    java.util.Collection
+
+  public abstract int size();
+  public abstract boolean isEmpty();
+  public abstract boolean contains(java.lang.Object);
+  public abstract java.util.Iterator<E> iterator();
+  public abstract java.lang.Object[] toArray();
+  public abstract <T> T[] toArray(T[]);
+  public default <T> T[] toArray(java.util.function.IntFunction<T[]>);
+  public abstract boolean add(E);
+  public abstract boolean remove(java.lang.Object);
+  public abstract boolean containsAll(java.util.Collection<?>);
+  public abstract boolean addAll(java.util.Collection<? extends E>);
+  public abstract boolean removeAll(java.util.Collection<?>);
+  public default boolean removeIf(java.util.function.Predicate<? super E>);
+  public abstract boolean retainAll(java.util.Collection<?>);
+  public abstract void clear();
+  and etc.
+
+
+List 
+=====
+It is a child interface of Collection interface.
+
+If we want to represent group of individual objects in a single entity where duplicate objects are allowed and order is preserved then we need to use List interface.
+
+Diagram: class49.1
+
+
+
+Q) What is the difference between List.of() and Arrays.asList() method?
+
+List.of()
+=========
+It is introduced in Java 9.
+It gives immutable object.
+We can't add, remove and replace the elements.
+We can't insert null.
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = List.of(5,9,1,2,4);
+		System.out.println(list);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = List.of(5,9,1,2,4);
+		list.add(10);
+		System.out.println(list);
+	}
+}
+o/p:
+	R.E : UnsupportedOperationException	
+
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = List.of(5,9,1,2,4);
+		list.remove(5);
+		System.out.println(list);
+	}
+}
+o/p:
+	R.E : UnsupportedOperationException	
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = List.of(5,9,1,2,4);
+		list.set(1,100);
+		System.out.println(list);
+	}
+}
+o/p:
+	R.E : UnsupportedOperationException	
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = List.of(5,9,1,2,4,null);
+		System.out.println(list);
+	}
+}
+o/p:
+	R.E : NullPointerException	
+
+
+
+Arrays.asList()
+--------------
+It is introduced in Java 1.2.
+It gives immutable object.
+We can't add, remove but we can replace.
+It allows null.
+
+ex:
+--
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(7,1,9,2,8,3);
+		System.out.println(list);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(7,1,9,2,8,3);
+		list.add(100);
+		System.out.println(list);
+	}
+}
+o/p:
+	R.E UnsupportedOperationException
+
+ex:
+----
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(7,1,9,2,8,3);
+		list.remove(9);
+		System.out.println(list);
+	}
+}
+o/p:
+	R.E UnsupportedOperationException
+
+ex:
+----
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(7,1,9,2,8,3);
+		list.set(1,100);
+		System.out.println(list);
+	}
+}
+
+ex:
+---
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(7,1,9,2,8,3,null);
+		list.set(1,100);
+		System.out.println(list);
+	}
+}
+
+
+
+Q) Write a java program to sort the list?
+
+Input:
+	6 9 1 4 7
+
+Output:
+	1 4 6 7 9 
+
+
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(6,9,1,4,7);
+		Collections.sort(list);
+		System.out.println(list);
+	}
+}
+
+
+Q) Write a java program to synchronized the list?
+
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(6,9,1,4,7);
+		List<Integer> synList = Collections.synchronizedList(list);
+		System.out.println(synList);
+	}
+}
+
+Q) Write a java program to reverse the list?
+
+import java.util.*;
+class  Test
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> list = Arrays.asList(6,9,1,4,7);
+		Collections.reverse(list);
+		System.out.println(list);
+	}
+}
+
+ArrayList 
+=========
+The underlying data structure is resizable array or growable array.
+
+Duplicate objects are allowed.
+
+Insertion order is preserved.
+
+Hetrogeneous objects are allowed.
+
+Null insertion is possible.
+
+It implements List, Serializable, Cloneable and RandomAccess interface.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+

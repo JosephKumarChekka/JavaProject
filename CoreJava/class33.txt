@@ -1,0 +1,215 @@
+Q) What is the difference between class and object ?
+
+class					object
+---------				---------
+To declare a class we will use 		To declare object we will use 
+class keyword.				new keyword.
+
+It is a blue print of an object.	It is a instance of a class.
+
+It is a logical entity.			It is a physical entity.
+
+It is a collection of objects.		It is a collection of properties and 
+					behaviours.
+
+It can't be modified.			It can be modified.
+
+It can't be redeclared.			It can be redeclared.
+
+
+
+Data Hiding 
+===========
+The process of hiding object data from unauthorized access is called data hiding.
+
+Using private modifier we can achieve data hiding concept.
+
+The main objective of data hiding is to provide security.
+
+ex:
+---
+class Account 
+{
+	private double balance = 10000d;
+}
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		Account acc = new Account();
+		System.out.println(acc.balance);
+	}
+}
+o/p:
+	C.T.E balance has private access in Account
+
+Abstraction 
+===========
+Hiding internal implementation and highlighting the set of services is called abstraction.
+
+Using abstract classes and interfaces we can implements abstraction.
+
+The best example of abstraction is GUI ATM machine where bank people will hide internal implementation and highlights set of services like banking, withdrawl, mini statement and etc.
+
+The main advantages of abstraction are 
+
+1) It gives security because it hides internal implementation.
+2) Enhancement becomes more easy because without effecting enduser they can perform 
+   any changes in our internal system.
+3) It provides flexibility to the enduser to use the system.
+4) It improves maintainability of an application.
+
+Encapsulation 
+=============
+The process of encapsulating/wrapping variables and it's associate methods in a single entity is called encapsulation.
+
+Diagram: class33.1
+
+A class is said to be encapsulated class if it supports data hiding and abstraction.
+
+Abstraction is used to hide the data and encapsulation is used to protect the data.
+
+In encapsulation for every variable we need to declare setter and getter methods.
+
+The main advantages of encapsulation are  
+
+1) It gives security
+2) Enhancements becomes more easy.
+3) It provides flexibility to the enduser.
+4) It improves maintainability of an application.
+
+The main disadvantage of encapsulation is , it will increase length of our code and slowdown the execution process.
+
+ex:
+---
+class Student 
+{
+	//current class variables 
+	private int studId;
+	private String studName;
+	private double studFee;
+	
+	//setter methods 
+	public void setStudId(int studId)
+	{
+		this.studId = studId;
+	}
+	public void setStudName(String studName)
+	{
+		this.studName = studName;
+	}
+	public void setStudFee(double studFee)
+	{
+		this.studFee = studFee;
+	}
+	
+	//getter methods 
+	public int getStudId()
+	{
+		return studId;
+	}
+	public String getStudName()
+	{
+		return studName;
+	}
+	public double getStudFee()
+	{
+		return studFee;
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		Student s = new Student();
+		s.setStudId(101);
+		s.setStudName("Alan");
+		s.setStudFee(1000d);
+			
+		System.out.println("Student Id : "+s.getStudId());
+		System.out.println("Student Name : "+s.getStudName());
+		System.out.println("Student Fee : "+s.getStudFee());
+	}
+}
+
+Q) What is the difference between Abstraction and Encapsulation ?
+
+Abstraction				Encapsulation 
+-------------				--------------
+Hiding internal implementation and 	The process of encapsulating or wrapping 
+highlighting the set of services 	variables and it's associate methods in a 
+is called abstraction.			single entity is called encapsulation.
+
+It is used to hide the data.		It is used to protect the data.
+
+Using abstract classes and interfaces	Using access modifiers we can achieve  
+we can achieve abstraction.		encapsulation.
+
+It is a process of gaining the 		It is a process of containing the information.
+information.
+
+It solves the issue at design 		It solves the issue at implementation level.
+level.
+
+
+Q) What is the difference between POJO and Java Bean class?
+
+POJO					Java Bean 
+----------				-----------
+It can't be serialized.			It can be serialized.
+
+Fields can have any visibility.		Fields can have only private visibility.
+
+It may or may not have constructor.	It must have atleast zero argument constructor.
+
+It can't extend other classes.		It can extends.
+
+It can't implement other interfaces.	It can implements.
+
+It can't use outside annotations.	It can uses.
+
+
+Q) What is tightly encapsulated class? 
+
+A class is said to be tightly encapsulated class if all the variables of that class declared as private.Here we don't need to check those variables contain setter and getter methods.
+
+ex:
+	class A 
+	{
+		int i = 10;	
+	}
+	// It is not a tighly encapsulated class 
+
+ex:
+	class A 
+	{
+		int i = 10;
+		private int j = 20;	
+	}
+	// It is not a tighly encapsulated class 
+
+ex:
+	class A
+	{
+		int i = 10;
+	}
+	class B extends A 
+	{
+		private int j = 20;
+	}
+	// It is not a tighly encapsulated class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,315 @@
+Q) Write a java program to reverse the array without using another array?
+
+Input:
+	4 9 1 3 6 2
+
+Output:
+	2 6 3 1 9 4 
+
+
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int[] arr = {4,9,1,3,6,2};
+		
+		int left = 0;
+		int right = arr.length-1;
+		
+		for(int i=0;i<arr.length;i++)
+		{
+			if(left<right)
+			{
+				int temp = arr[left];
+				arr[left]=arr[right];
+				arr[right]=temp;
+				
+				left++;
+				right--;
+			}
+		}
+		//display elements 
+		for(int i : arr)
+		{
+			System.out.print(i+" ");
+		}
+	}
+}
+
+
+
+
+Q) Write a java program to merge two arrays and display them in sorting order?
+
+input:
+	5 1 3 2 4 
+	9 6 8 7 10
+output:
+	1 2 3 4 5 6 7 8 9 10
+
+
+import java.util.Arrays;
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int[] arr1 = {5,1,3,2,4}; 
+		int[] arr2 = {9,6,8,7,10};
+		
+		int size1 = arr1.length; // 5
+		int size2 = arr2.length; // 5 
+		
+		arr1 = Arrays.copyOf(arr1,size1+size2);
+		
+		int index = 0;
+		for(int i=size1;i<arr1.length;i++)
+		{
+			arr1[i] = arr2[index++];
+		}
+		Arrays.sort(arr1);
+		System.out.println(Arrays.toString(arr1));
+	}
+}
+
+
+
+
+
+Q) Write a java program to insert element in a given index?
+
+Input:
+	arr = 7 2 8 1 9 4 
+	index = 3
+	insert = 100
+Output:
+	7 2 8 100 1 9 4
+
+
+import java.util.Arrays;
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int[] arr ={7,2,8,1,9,4}; 
+		int index = 3;
+		int insert = 100;
+
+		arr = Arrays.copyOf(arr,arr.length+1);
+			
+		for(int i=arr.length-1;i>=index;i--)
+		{
+			arr[i] = arr[i-1];
+		}
+		arr[index] = insert;
+		
+		//display 
+		for(int i : arr)
+		{
+			System.out.print(i+" ");
+		}
+	}
+}
+
+
+
+Q) Write a java program to display leader elements from given array?
+
+Input:
+	2 8 72 9 34 6 12
+
+Output:
+	72 34 12
+
+
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int[] arr = {2,8,72,9,34,6,12};
+		
+		for(int i=0;i<arr.length;i++)
+		{
+			boolean flag = true;
+			for(int j=i+1;j<arr.length;j++)
+			{
+				if(arr[i]>arr[j])
+				{
+					continue;
+				}
+				else
+				{
+					flag = false;
+					break;
+				}
+			}
+			if(flag==true)
+				System.out.print(arr[i]+" ");
+		}
+	}
+}
+
+
+Double Dimensional Array 
+========================
+Double dimensional array is a combination of rows and columns.
+
+Double dimensional array is implemented based on array of arrays approach but not matrix form.
+
+Double dimensional array is used to develop business oriented applications, gaming applications, matrix type of applications and etc.
+
+The main objective of double dimensional array is memory utilization.
+
+We can create double dimensional array as follow.
+ex:
+			    rows
+                              |
+	int[][] arr = new int[3][3];
+				 |
+				cols 
+
+	Here we can store 9 elements.
+
+We can initialized double dimensional array as follow.
+ex:
+	int[][] arr = {{1,2,3},{4,5,6},{7,8,9}};
+
+
+
+Q) Write a java program to accept array elements and display them in matrix form?
+
+import java.util.Scanner;
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the rows :");
+		int rows = sc.nextInt();
+		
+		System.out.println("Enter the cols :");
+		int cols = sc.nextInt();
+		
+		int[][] arr = new int[rows][cols];
+		
+		//insert elements 
+		for(int i=0;i<rows;i++)
+		{
+			for(int j=0;j<cols;j++)
+			{
+				System.out.println("Enter the element : ");
+				arr[i][j] = sc.nextInt();
+			}
+		}
+		
+		//print elements 
+		for(int i=0;i<rows;i++)
+		{
+			for(int j=0;j<cols;j++)
+			{
+				System.out.print(arr[i][j]+" ");
+			}
+			//new line 
+			System.out.println();
+		}
+	}
+}
+
+
+Q) Write a java program to display array elements from double dimensional array?
+
+input:
+	1 2 3
+	4 5 6 
+	7 8 9 
+
+Approach1
+----------
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int[][] arr = {{1,2,3},{4,5,6},{7,8,9}}; 
+		
+		int rows = arr.length;
+		int cols = arr[0].length;
+		
+		for(int i=0;i<rows;i++)
+		{
+			for(int j=0;j<cols;j++)
+			{
+				System.out.print(arr[i][j]+" ");
+			}
+			//new line 
+			System.out.println();
+		}
+	}
+}
+
+Approach2
+---------
+class Test  
+{
+	public static void main(String[] args) 
+	{
+		int[][] darr = {{1,2,3},{4,5,6},{7,8,9}}; 
+		
+		for(int[] arr : darr)
+		{
+			for(int i : arr)
+			{
+				System.out.print(i+" ");
+			}
+			// new line
+			System.out.println();
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

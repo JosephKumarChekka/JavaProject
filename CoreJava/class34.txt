@@ -1,0 +1,432 @@
+Is-A relationship 
+=================
+Is-A relationship is also known as inheritance.
+
+By using extends keyword we can implements Is-A relationship.
+
+The main objective of Is-A relationship is to provide reusability.
+
+ex:
+	Animal is a dog and Dog is a animal 
+	Vehicle is a car and Car is a vehicle
+	Fruit is a mango and Mango is a fruit
+
+ex:
+---
+class Animal 
+{
+	public void eat()
+	{
+		System.out.println("Eat-Method");
+	}
+}
+class Dog extends Animal 
+{
+	public void sound()
+	{
+		System.out.println("Sound-Method");
+	}
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Animal a = new Animal();
+		a.eat();
+		
+		Dog d = new Dog();
+		d.eat();
+		d.sound();
+		
+		Animal a1 = new Dog();
+		a1.eat();
+		
+		Dog d1 = new Animal(); // C.T.E 
+	}
+}
+
+conclusion 
+-----------
+Whatever properties are there with parent by default go to child. But whatever properties are there with child it never go backs to parent.
+
+A parent reference can hold child object but a child reference can't hold parent object.
+
+Inheritance 
+===========
+Inheritance is a mechanism in which one class inherits the properties of another class.
+
+Deriving a class in the presence of existing class is called inheritance.
+
+The main objective of inheritance is to provide reusability.
+
+Diagram: class34.1
+
+In java, we have five types of inheritance.
+
+1) Single Level Inheritance 
+
+2) Multi-Level Inheritance 
+
+3) Multiple Inheritance 
+
+4) Hierarchical Inheritance 
+
+5) Hybrid Inheritance 
+
+1) Single Level Inheritance 
+---------------------------
+If we derived a class in the presence of one base class is called single level inheritance.
+
+ex:
+	A (parent/super/base class)	
+	|
+	|
+	B (child/sub/derived class)	
+
+ex:
+---
+class A 
+{
+	public void methodOne()
+	{
+		System.out.println("MethodOne");
+	}
+}
+class B extends A 
+{
+	public void methodTwo()
+	{
+		System.out.println("MethodTwo");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		A a = new A();
+		a.methodOne();
+		B b = new B();
+		b.methodOne();
+		b.methodTwo();
+	}
+}
+
+2) Multi-Level Inheritance 
+-------------------------
+If we derived a class in the presence of one base class and that class is derived from another base class is called multi-level inheritance.
+ex:
+	A
+	|
+	|
+	B
+	|
+	|
+	C 	
+
+ex:
+---
+class A 
+{
+	public void methodOne()
+	{
+		System.out.println("MethodOne");
+	}
+}
+class B extends A 
+{
+	public void methodTwo()
+	{
+		System.out.println("MethodTwo");
+	}
+}
+class C extends B 
+{
+	public void methodThree()
+	{
+		System.out.println("MethodThree");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		A a = new A();
+		a.methodOne();
+		
+		B b = new B();
+		b.methodOne();
+		b.methodTwo();
+		
+		C c = new C();
+		c.methodOne();
+		c.methodTwo();
+		c.methodThree();
+	}
+}
+
+3) Multiple Inheritance
+-----------------------
+In java, a class can't extends more then one class simultenously because java does not support multiple inheritance.
+ex:
+	class A 
+	{
+	}
+	class B 
+	{	
+	}
+	class C extends A,B --> invalid 	
+	{
+	}
+
+In java, interface can extends more then one interface so we can achieve inheritance concept through interfaces.
+ex:
+	interface A 
+	{
+	}
+	interface B 
+	{
+	}
+	interface C extends A,B --> valid 
+	{
+	}	
+
+If our class does not extends any other class then it is a direct child class of Object class.
+ex:			diag:
+	class A 		Object			
+	{			|
+	}			|
+				A 
+
+If our class extends some other class then our class is a indirect child class of Object class.
+ex:			diag:
+	class A 		Object
+	{			|
+	}			|
+	class B extends A 	A
+	{			|
+				|
+	}			B 
+
+Java does not support cyclic inheritance.
+ex:
+	class A extends B 
+	{
+	}
+	class B extends A 
+	{
+	}
+
+
+Q) Why java does not support multiple inheritance?
+
+There is a chance of raising ambiguity problem that's why java does not support multiple inheritance.
+ex:
+		P1.m1()			P2.m1()
+		|-----------------------------|			
+				|
+				C.m1()
+
+4) Hierarchical Inheritance 
+---------------------------
+If we derived multiple classes by using one base class is called hierarchical inheritance.
+
+ex:
+		A		
+		|
+	|---------------|
+	B		C
+
+ex:
+---
+class A 
+{
+	public void methodOne()
+	{
+		System.out.println("MethodOne");
+	}
+}
+class B extends A 
+{
+	public void methodTwo()
+	{
+		System.out.println("MethodTwo");
+	}
+}
+class C extends A
+{
+	public void methodThree()
+	{
+		System.out.println("MethodThree");
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		A a = new A();
+		a.methodOne();
+		
+		B b = new B();
+		b.methodOne();
+		b.methodTwo();
+		
+		C c = new C();
+		c.methodOne();
+		c.methodThree();
+	}
+}
+
+5) Hybrid Inheritance
+---------------------
+It is a combination of two or more inheritance.
+Java does not support hybrid inheritance.
+
+ex:
+		A		
+		|
+	|---------------|
+	B		C
+	|---------------|
+		|
+		D 
+	
+
+Constructor 
+============
+It is a special method which is used to initialized an object.
+
+Having same name as class name is called constructor.
+
+Constructor is called when instance of a class is created.
+
+It does not allow returntype, if we take any returntype we won't get any compile time error or runtime error.
+
+A constructor will accept following modifiers.
+ex:
+	default 	
+	public 
+	private 
+	protected 
+
+In java , constructors are divided into two types.
+
+1) Userdefined constructor 
+
+2) Default constructor 
+
+1) Userdefined constructor 
+----------------------------
+Constructor which is created by the user based on the application requirements is called userdefined constructor.
+
+It is classified into two types.
+
+i) Zero Argument Constructor
+
+ii) Parameterized Constructor 
+
+i) Zero Argument Constructor
+------------------------------
+Suppose if we are not passing any argument to userdefined constructor then such constructor is called zero-argument constructor.
+
+ex:
+---
+
+class Test 
+{
+	Test()
+	{
+		System.out.println("constructor");
+	}
+	
+	public static void main(String[] args)
+	{
+		System.out.println("main-method");
+	}
+}
+o/p:
+	main-method
+
+ex:
+---
+
+class Test 
+{
+	public Test()
+	{
+		System.out.println("constructor");
+	}
+	
+	public static void main(String[] args)
+	{
+		System.out.println("main-method");
+		Test t = new Test();
+	}
+}
+o/p:
+	main-method 
+	constructor
+ex:
+--
+class Test 
+{
+	private Test()
+	{
+		System.out.println("constructor");
+	}
+	
+	public static void main(String[] args)
+	{
+		Test t1 = new Test();
+		System.out.println("main-method");
+		Test t2 = new Test();
+	}
+}
+
+o/p:
+	constructor
+	main-method 
+	constructor
+
+ex:
+---
+class Test 
+{
+	protected Test()
+	{
+		System.out.println("constructor");
+	}
+	
+	public static void main(String[] args)
+	{
+		Test t1 = new Test();
+		System.out.println("main-method");
+		Test t2 = new Test();
+	}
+}
+o/p:
+	constructor
+	main-method 
+	constructo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

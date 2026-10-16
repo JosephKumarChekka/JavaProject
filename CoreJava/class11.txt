@@ -1,0 +1,490 @@
+Typecasting in java
+===================
+The process of converting from one datatype to another datatype is called typecasting.
+
+In java, typecasting can be performed in two ways.
+
+1) Implicit typecasting 
+
+2) Explicit typecasting 
+
+1) Implicit typecasting
+-----------------------
+If want to store small value into a bigger variable then we need to use implicit typecasting.
+
+A compiler is responsible to perform implicit typecasting.
+
+There is no possibility to loss the information.
+
+It is also known as widening or upcasting.
+
+We can perform implicit typecasting as follow.
+
+ex:
+	byte --> short
+			-->
+				int  --> long  --> float --> double
+			-->
+		char
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		byte b = 10;
+		int i = b;
+		System.out.println(i);
+	}
+}
+
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		char ch = 'a';	
+		long l = ch;
+		System.out.println(l); // 97
+	}
+}
+
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		int i = 10;
+		double d = i;
+		System.out.println(d); // 10.0
+	}
+}
+
+2) Explicit typecasting 
+-----------------------
+If we want to store bigger value into a smaller variable then we need to use explicit typecasting.
+
+A programmer is responsible to perform explicit typecasting.
+
+There is a possibility to loss the information.
+
+It is also known as narrowing or downcasting.
+
+We can perform explicit typecasting as follow.
+
+ex:
+
+	byte <-- short
+			<--
+				int  <-- long  <-- float <-- double
+			<--
+		char	
+
+
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		double d = 10.5d;
+		int i = (int)d;
+		System.out.println(i);	// 10	
+	}
+}
+
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		int i = 65;
+		char ch = (char)i;
+		System.out.println(ch);	// A
+	}
+}
+
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		int i = 130;
+		byte b = (byte)i;
+		System.out.println(b); //  -126
+	}
+}
+
+
+
+Types of blocks in java
+=======================
+A block is a set of statements which is enclosed in a curly braces i.e {}.
+
+We have three types of blocks in java.
+
+1) Instance block 
+
+2) Static block 
+
+3) Local block 
+
+1) Instance block 
+------------------
+Instance block is used to initialize instance variables.
+
+Instance block must and should declare immediately after the class but not inside methosd and constructors.
+
+Instance block will execute when instance of a class is created.
+
+We can declare instance block as follow.
+
+syntax:
+-------
+	//instance block 
+	{	
+		-
+		- // set of statements 
+		-
+	}
+
+
+ex:
+---
+class Test
+{
+	//instance block 	
+	{
+		System.out.println("instance-block");	
+	}
+	
+	public static void main(String[] args)
+	{	
+		System.out.println("main-method");
+	}
+}
+o/p:
+	main-method
+
+ex:
+--
+class Test
+{
+	//instance block 	
+	{
+		System.out.println("instance-block");	
+	}
+	
+	public static void main(String[] args)
+	{	
+		System.out.println("main-method");
+		Test t = new Test();
+	}
+}
+o/p:
+	main-method
+	instance-block 
+
+ex:
+---
+class Test
+{
+	//instance block 	
+	{
+		System.out.println("instance-block");	
+	}
+	
+	public static void main(String[] args)
+	{	
+		Test t1= new Test();
+		System.out.println("main-method");
+		Test t2= new Test();
+	}
+}
+
+ex:
+--
+class Test
+{
+	//instance variable 
+	int i;
+
+	//instance block 
+	{
+		i = 100;
+	}
+
+	public static void main(String[] args)
+	{	
+		Test t = new Test();
+		System.out.println(t.i); // 100
+	}
+}
+
+2) static block 
+---------------
+It is used to initialize static variables.
+
+Static block must and should declare immediately after the class using static keyword but not inside methods and constructors.
+
+Static block will execute at the time of class loading.	 
+
+We can declare static block as follow.
+
+syntax:
+------
+	//static block 
+	static
+	{
+		-
+		- // set of statements
+		-
+	}
+	 
+ex:
+----
+class Test
+{
+	//static block 
+	static
+	{	
+		System.out.println("static-block");
+	}
+
+	public static void main(String[] args)
+	{	
+		System.out.println("main-method"); 
+	}
+}
+o/p:
+	static-block
+	main-method 
+
+ex:
+---
+class Test
+{
+	//instance block 
+	{
+		System.out.println("instance-block");
+	}
+
+	//static block 
+	static
+	{	
+		System.out.println("static-block");
+	}
+
+	public static void main(String[] args)
+	{	
+		Test t = new Test();
+		System.out.println("main-method"); 
+	}
+}
+o/p:
+	static-block
+	instnace-block
+	main-method 
+
+ex:
+---
+class Test
+{
+	//static variable 
+	static int i;
+
+	//static block 
+	static
+	{
+		i = 200;
+	}
+
+	public static void main(String[] args)
+	{	
+		System.out.println(i); //200
+	}
+}
+
+	 
+3) local block 
+---------------
+It is used to initialize the values to local variables.
+
+Local block must and should declare inside methods and constructors.
+
+Local block will execute just like a normal statement.
+
+We can declare local block as follow.
+
+syntax:
+------
+	//local block 
+	{
+		-
+		- //set of statements 
+		-
+	}
+
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		System.out.println("stmt1");
+
+		//local block 
+		{
+			System.out.println("stmt2");
+		}
+
+		System.out.println("stmt3");
+	}
+}
+o/p:
+	stmt1
+	stmt2
+	stmt3
+	 
+ex:
+---
+class Test
+{
+	public static void main(String[] args)
+	{	
+		//local variables 
+		int i;
+
+		//local block 
+		{
+			i = 300;
+		}
+
+		System.out.println(i); // 300
+	}
+}
+
+Interview Question
+==================
+
+Q) Can we execute java program without main method?
+
+Yes, Till 1.6 version it is possible to execute java program without main method using static block but from 1.7 version onwards it is not possible to execute java program without main method.	 
+
+ex:
+class Test
+{
+	//static block 
+	static
+	{
+		System.out.println("Hello World");
+		System.exit(0);
+	}
+}
+
+	 	
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
